@@ -7,3 +7,9 @@ spring.datasource:
   username: root
   password: 123456
   driver-class-name: com.mysql.jdbc.Driver
+
+#阿里云短息配置
+alibaba:
+  sms:
+    accessKeyId: LTAIRqcqeXSwkL3b
+    accessKeySecret: 1a24aNArj80gMHzPuBcyKa3qjl4JR4

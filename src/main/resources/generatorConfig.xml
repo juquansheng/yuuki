@@ -6,7 +6,7 @@
 
   <!-- !!!! Driver Class Path !!!! -->
   <classPathEntry
-    location="C:\Users\efguc\.m2\repository\mysql\mysql-connector-java\5.1.43/mysql-connector-java-5.1.43.jar"/>
+    location="C:\Users\juqua\.m2\repository\mysql\mysql-connector-java\5.1.30\mysql-connector-java-5.1.30.jar"/>
 
   <context id="context" targetRuntime="MyBatis3">
 
@@ -19,8 +19,8 @@
 
     <!-- !!!! Database Configurations !!!! -->
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-      connectionURL="jdbc:mysql://121.196.222.247:3306/yxtk"
-      userId="root" password=""/>
+      connectionURL="jdbc:mysql://116.62.138.113:3306/ttbf"
+      userId="root" password="123456"/>
 
     <javaTypeResolver>
       <property name="forceBigDecimals" value="false"/>
