@@ -70,7 +70,7 @@ public class ShiroRealm extends AuthorizingRealm {
         return new SimpleAuthenticationInfo(
                 user.getId(),
                 user.getPassword(),
-                ByteSource.Util.bytes(username),
+                ByteSource.Util.bytes(user.getHash()),
                 getName()
         );
     }
