@@ -23,7 +23,6 @@ import com.malaxiaoyugan.yuukicore.entity.Right;
 import com.malaxiaoyugan.yuukicore.entity.Role;
 import com.malaxiaoyugan.yuukicore.entity.User;
 import com.malaxiaoyugan.yuukicore.enums.UserStatusEnum;
-import com.malaxiaoyugan.yuukicore.enums.UserTypeEnum;
 import com.malaxiaoyugan.yuukicore.service.RoleService;
 import com.malaxiaoyugan.yuukicore.service.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -71,7 +70,7 @@ public class ShiroRealm extends AuthorizingRealm {
         return new SimpleAuthenticationInfo(
                 user.getId(),
                 user.getPassword(),
-                ByteSource.Util.bytes(username + user.getHash()),
+                ByteSource.Util.bytes(username),
                 getName()
         );
     }
