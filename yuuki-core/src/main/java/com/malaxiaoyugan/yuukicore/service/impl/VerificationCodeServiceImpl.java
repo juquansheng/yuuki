@@ -1,18 +1,18 @@
-package com.uuworlds.yuuki.service.impl;
+package com.malaxiaoyugan.yuukicore.service.impl;
 
 
-import com.uuworlds.yuuki.service.RedisService;
-import com.uuworlds.yuuki.service.SmsService;
-import com.uuworlds.yuuki.service.VerificationCodeService;
-import com.uuworlds.yuuki.utils.GsonUtils;
-import com.uuworlds.yuuki.utils.Params;
-import com.uuworlds.yuuki.utils.StringListUtils;
+
+import com.malaxiaoyugan.yuukicore.service.RedisService;
+import com.malaxiaoyugan.yuukicore.service.SmsService;
+import com.malaxiaoyugan.yuukicore.service.VerificationCodeService;
+import com.malaxiaoyugan.yuukicore.utils.GsonUtils;
+import com.malaxiaoyugan.yuukicore.utils.Params;
+import com.malaxiaoyugan.yuukicore.utils.StringListUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;

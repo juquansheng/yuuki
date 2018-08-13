@@ -1,8 +1,8 @@
-package com.uuworlds.yuuki.controller;
+package com.malaxiaoyugan.yuukicore.controller;
 
 
-import com.uuworlds.yuuki.service.VerificationCodeService;
-import com.uuworlds.yuuki.utils.TTBFResult;
+import com.malaxiaoyugan.yuukicore.service.VerificationCodeService;
+import com.malaxiaoyugan.yuukicore.utils.TTBFResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

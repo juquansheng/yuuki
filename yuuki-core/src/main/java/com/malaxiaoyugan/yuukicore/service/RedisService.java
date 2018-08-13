@@ -1,4 +1,4 @@
-package com.uuworlds.yuuki.service;
+package com.malaxiaoyugan.yuukicore.service;
 
 import java.util.concurrent.TimeUnit;
 

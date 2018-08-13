@@ -1,4 +1,4 @@
-package com.uuworlds.yuuki.utils;
+package com.malaxiaoyugan.yuukicore.utils;
 
 
 import com.fasterxml.jackson.databind.JsonNode;

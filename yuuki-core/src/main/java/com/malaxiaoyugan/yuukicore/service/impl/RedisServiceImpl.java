@@ -1,7 +1,8 @@
-package com.uuworlds.yuuki.service.impl;
+package com.malaxiaoyugan.yuukicore.service.impl;
 
 
-import com.uuworlds.yuuki.service.RedisService;
+
+import com.malaxiaoyugan.yuukicore.service.RedisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

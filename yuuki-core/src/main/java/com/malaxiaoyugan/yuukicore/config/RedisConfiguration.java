@@ -1,4 +1,4 @@
-package com.uuworlds.yuuki.config;
+package com.malaxiaoyugan.yuukicore.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

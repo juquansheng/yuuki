@@ -1,4 +1,4 @@
-package com.uuworlds.yuuki.utils;
+package com.malaxiaoyugan.yuukicore.utils;
 
 
 public class Params {
