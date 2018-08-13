@@ -50,8 +50,6 @@ public class ShiroRealm extends AuthorizingRealm {
     @Resource
     private UserService userService;
     @Resource
-    private SysResourcesService resourcesService;
-    @Resource
     private RoleService roleService;
 
     /**
