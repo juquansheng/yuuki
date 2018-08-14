@@ -1,4 +1,4 @@
-package com.malaxiaoyugan.yuukicore.controller;
+package com.malaxiaoyugan.yuukiadmin.controller;
 
 
 import com.malaxiaoyugan.yuukicore.service.VerificationCodeService;

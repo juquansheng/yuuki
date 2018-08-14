@@ -1,6 +1,6 @@
 # Server settings
 server:
-    port: 8443
+    port: 8927
     # HTTP请求和响应头的最大量，以字节为单位，默认值为4096字节,超过此长度的部分不予处理,一般8K。解决java.io.EOFException: null问题
     max-http-header-size: 8192
     use-forward-headers: true
@@ -81,7 +81,7 @@ spring:
               # 连接池中的最小空闲连接
               min-idle: 0
         # 连接超时时间（毫秒）
-        timeout: 0ms
+        #timeout: 0ms
         # 默认的数据过期时间，主要用于shiro权限管理
         expire: 2592000
     banner:
@@ -102,3 +102,9 @@ pagehelper:
     reasonable: true
     support-methods-arguments: true
     params: count=countSql
+
+#阿里云短息配置
+alibaba:
+  sms:
+    accessKeyId: LTAIRqcqeXSwkL3b
+    accessKeySecret: 1a24aNArj80gMHzPuBcyKa3qjl4JR4

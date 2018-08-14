@@ -17,7 +17,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.malaxiaoyugan.yuukicore.shiro;
+package com.malaxiaoyugan.yuukiadmin.shiro;
 
 import com.malaxiaoyugan.yuukicore.entity.Right;
 import com.malaxiaoyugan.yuukicore.entity.Role;
@@ -32,14 +32,9 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Shiro-密码输入错误的状态下重试次数的匹配管理

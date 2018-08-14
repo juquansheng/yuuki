@@ -1,4 +1,4 @@
-package com.malaxiaoyugan.yuukicore.interceptor;
+package com.malaxiaoyugan.yuukiadmin.interceptor;
 
 import com.malaxiaoyugan.yuukicore.constants.SessionConst;
 import com.malaxiaoyugan.yuukicore.entity.User;

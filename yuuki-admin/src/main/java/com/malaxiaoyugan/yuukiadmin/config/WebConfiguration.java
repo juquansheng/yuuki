@@ -1,4 +1,4 @@
-package com.malaxiaoyugan.yuukicore.config;
+package com.malaxiaoyugan.yuukiadmin.config;
 
 
 import org.springframework.context.annotation.Bean;

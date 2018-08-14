@@ -7,7 +7,7 @@
   <groupId>com.uuworlds</groupId>
   <artifactId>yuuki</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
+  <packaging>pom</packaging>
 
   <name>yuuki</name>
   <description>yuuki project for Spring Boot</description>
@@ -74,5 +74,9 @@
     </plugins>
   </build>
 
+  <modules>
+    <module>yuuki-core</module>
+    <module>yuuki-admin</module>
+  </modules>
 
 </project>

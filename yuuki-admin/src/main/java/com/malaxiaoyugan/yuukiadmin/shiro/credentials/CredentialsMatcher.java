@@ -1,4 +1,4 @@
-package com.malaxiaoyugan.yuukicore.shiro.credentials;
+package com.malaxiaoyugan.yuukiadmin.shiro.credentials;
 
 import com.malaxiaoyugan.yuukicore.utils.PasswordUtil;
 import org.apache.shiro.authc.AuthenticationInfo;

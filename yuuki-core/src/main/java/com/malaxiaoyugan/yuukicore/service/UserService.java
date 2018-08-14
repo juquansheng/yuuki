@@ -32,4 +32,11 @@ public interface UserService {
      * @return
      */
     List<User> getUserByRoleId(Long roleId);
+
+    /**
+     * 添加用户
+     * @param user
+     * @return
+     */
+    User insertUser(User user);
 }

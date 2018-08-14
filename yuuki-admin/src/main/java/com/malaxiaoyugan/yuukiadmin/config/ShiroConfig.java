@@ -1,11 +1,11 @@
-package com.malaxiaoyugan.yuukicore.config;
+package com.malaxiaoyugan.yuukiadmin.config;
 
 
+import com.malaxiaoyugan.yuukiadmin.shiro.ShiroRealm;
+import com.malaxiaoyugan.yuukiadmin.shiro.ShiroService;
+import com.malaxiaoyugan.yuukiadmin.shiro.credentials.RetryLimitCredentialsMatcher;
 import com.malaxiaoyugan.yuukicore.framework.property.RedisProperties;
 import com.malaxiaoyugan.yuukicore.framework.redis.CustomRedisManager;
-import com.malaxiaoyugan.yuukicore.shiro.ShiroRealm;
-import com.malaxiaoyugan.yuukicore.shiro.ShiroService;
-import com.malaxiaoyugan.yuukicore.shiro.credentials.RetryLimitCredentialsMatcher;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -159,7 +159,7 @@ public class ShiroConfig {
         redisManager.setPort(redisProperties.getPort());
         redisManager.setDatabase(redisProperties.getDatabase());
         redisManager.setExpire(redisProperties.getExpire());
-        redisManager.setTimeout(redisProperties.getTimeout().getNano() * 1000);
+        //redisManager.setTimeout(redisProperties.getTimeout().getNano() * 1000);
         redisManager.setPassword(redisProperties.getPassword());
         return redisManager;
     }

@@ -1,4 +1,4 @@
-package com.malaxiaoyugan.yuukicore.shiro;
+package com.malaxiaoyugan.yuukiadmin.shiro;
 
 import com.malaxiaoyugan.yuukicore.entity.User;
 import com.malaxiaoyugan.yuukicore.framework.holder.SpringContextHolder;
@@ -15,6 +15,7 @@ import org.apache.shiro.web.servlet.AbstractShiroFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,6 +53,8 @@ public class ShiroService {
         filterChainDefinitionMap.put("/plugin/**", "anon");
         filterChainDefinitionMap.put("/vendors/**", "anon");
         filterChainDefinitionMap.put("/getKaptcha", "anon");
+
+        filterChainDefinitionMap.put("/passport/test", "anon");
         // 加载数据库中配置的资源权限列表
        /* List<Resources> resourcesList = resourcesService.listUrlAndPermission();
         for (Resources resources : resourcesList) {

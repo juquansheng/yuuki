@@ -74,4 +74,18 @@ public class UserServiceImpl implements UserService {
         }
         return userList;
     }
+
+    /**
+     * 添加用户
+     * @param user
+     * @return
+     */
+    @Override
+    public User insertUser(User user) {
+        boolean insert = userMapper.insertSelective(user) > 0;
+        if (insert){
+            return user;
+        }
+        return null;
+    }
 }
