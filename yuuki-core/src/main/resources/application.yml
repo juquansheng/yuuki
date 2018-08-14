@@ -89,7 +89,7 @@ spring:
 # MyBatis
 mybatis:
     type-aliases-package: com.zyd.blog.persistence.beans
-    mapper-locations: classpath:/mybatis/*.xml
+    mapper-locations: classpath:/mapper/*.xml
 # mapper
 mapper:
     mappers:

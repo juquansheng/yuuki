@@ -88,7 +88,7 @@ public class PassPortController {
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public ResponseVO test() {
 
-            return TTBFResultUtil.success("test");
+            return TTBFResultUtil.success("test",userService.getUserById(1L));
 
     }
 }
