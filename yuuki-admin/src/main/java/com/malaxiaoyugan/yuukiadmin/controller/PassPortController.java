@@ -1,8 +1,10 @@
 package com.malaxiaoyugan.yuukiadmin.controller;
 
+import com.malaxiaoyugan.yuukicore.constants.PassPortConst;
 import com.malaxiaoyugan.yuukicore.entity.User;
 import com.malaxiaoyugan.yuukicore.framework.object.ResponseVO;
 import com.malaxiaoyugan.yuukicore.framework.property.AppProperties;
+import com.malaxiaoyugan.yuukicore.service.RedisService;
 import com.malaxiaoyugan.yuukicore.service.UserService;
 import com.malaxiaoyugan.yuukicore.utils.PasswordUtil;
 import com.malaxiaoyugan.yuukicore.utils.SessionUtil;
@@ -25,6 +27,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
+/**
+ *@describe
+ *@author  ttbf
+ *@date  2018/8/15
+ */
 @Slf4j
 @RestController
 @RequestMapping(value = "passport")
@@ -34,12 +41,17 @@ public class PassPortController {
     private AppProperties config;
     @Autowired
     private UserService userService;
+    @Autowired
+    private RedisService redisService;
 
-    @RequestMapping(value = "/login1",method = RequestMethod.POST)
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
     public ResponseVO login(@RequestBody LoginVo loginVo, HttpServletRequest request,
                             HttpServletResponse response){
+
+        String verifyCode = redisService.get(PassPortConst.VERIFYCODE_KEY + loginVo.getVerifyCodeKey(), PassPortConst.VERIFYCODE_KEY);
         if (config.getEnableKaptcha()) {
-            if (StringUtils.isEmpty(loginVo.getCaptcha()) || !loginVo.getCaptcha().equals(SessionUtil.getKaptcha())) {
+            if (StringUtils.isEmpty(loginVo.getVerifyCodeKey()) || StringUtils.isEmpty(verifyCode) ||
+                    !loginVo.getVerifyCodeKey().equals(verifyCode)) {
                 return TTBFResultUtil.error("验证码错误！");
             }
             SessionUtil.removeKaptcha();
@@ -60,7 +72,7 @@ public class PassPortController {
         }
     }
 
-    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    @RequestMapping(value = "/register1",method = RequestMethod.POST)
     public ResponseVO register(@RequestBody RegisterVo registerVo, HttpServletRequest request,
                                HttpServletResponse response) throws Exception {
         try {
@@ -85,7 +97,7 @@ public class PassPortController {
     }
 
 
-    @RequestMapping(value = "/login",method = RequestMethod.GET)
+    @RequestMapping(value = "/register",method = RequestMethod.GET)
     public ResponseVO test() {
 
             return TTBFResultUtil.success("test",userService.getUserById(1L));

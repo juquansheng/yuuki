@@ -3,7 +3,8 @@ package com.malaxiaoyugan.yuukicore.vo;
 public class RegisterVo {
     private String userName;
     private String password;
-    private String verifyCode;
+    //短信/邮箱验证码
+    private String captcha;
     private String phone;
     private String mail;
 
@@ -23,12 +24,12 @@ public class RegisterVo {
         this.password = password;
     }
 
-    public String getVerifyCode() {
-        return verifyCode;
+    public String getCaptcha() {
+        return captcha;
     }
 
-    public void setVerifyCode(String verifyCode) {
-        this.verifyCode = verifyCode;
+    public void setCaptcha(String captcha) {
+        this.captcha = captcha;
     }
 
     public String getPhone() {

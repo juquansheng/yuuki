@@ -1,4 +1,4 @@
-package com.malaxiaoyugan.yuukicore.utils;
+package com.malaxiaoyugan.yuukicore.constants;
 
 
 public class Params {
@@ -13,10 +13,7 @@ public class Params {
     //微信支付证书
     public  static String CERT_PATH ;
 
-    /**
-     * 手机验证码key值前缀
-     */
-    public static final String VERIFYCODE_KEY = "VerifyCode:";
+
 
     public static final String TOKEN_KEY = "authToken:";
     public static final String AUTHID = "authId:";

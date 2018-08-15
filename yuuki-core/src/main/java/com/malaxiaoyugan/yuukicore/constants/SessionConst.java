@@ -1,7 +1,9 @@
 package com.malaxiaoyugan.yuukicore.constants;
 
 /**
- * @author yadong.zhang (yadong.zhang0415(a)gmail.com)
+ *@describe
+ *@author  ttbf
+ *@date  2018/8/15
  */
 public class SessionConst {
     /**

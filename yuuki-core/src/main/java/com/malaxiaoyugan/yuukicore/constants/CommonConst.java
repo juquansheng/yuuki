@@ -1,5 +1,10 @@
 package com.malaxiaoyugan.yuukicore.constants;
 
+/**
+ *@describe
+ *@author  ttbf
+ *@date  2018/8/15
+ */
 public class CommonConst {
     /**
      * 安全密码，作为盐值用于用户密码的加密

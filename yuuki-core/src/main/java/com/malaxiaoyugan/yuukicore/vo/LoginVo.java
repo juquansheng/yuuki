@@ -3,8 +3,9 @@ package com.malaxiaoyugan.yuukicore.vo;
 public class LoginVo {
     private String userName;
     private String password;
-    private String captcha;
     private boolean rememberMe;
+    //图片验证码
+    private String verifyCodeKey;
 
     public String getUserName() {
         return userName;
@@ -22,19 +23,19 @@ public class LoginVo {
         this.password = password;
     }
 
-    public String getCaptcha() {
-        return captcha;
-    }
-
-    public void setCaptcha(String captcha) {
-        this.captcha = captcha;
-    }
-
     public boolean isRememberMe() {
         return rememberMe;
     }
 
     public void setRememberMe(boolean rememberMe) {
         this.rememberMe = rememberMe;
+    }
+
+    public String getVerifyCodeKey() {
+        return verifyCodeKey;
+    }
+
+    public void setVerifyCodeKey(String verifyCodeKey) {
+        this.verifyCodeKey = verifyCodeKey;
     }
 }

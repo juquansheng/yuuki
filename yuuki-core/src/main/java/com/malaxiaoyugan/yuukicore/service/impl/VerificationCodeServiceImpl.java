@@ -2,11 +2,12 @@ package com.malaxiaoyugan.yuukicore.service.impl;
 
 
 
+import com.malaxiaoyugan.yuukicore.constants.PassPortConst;
 import com.malaxiaoyugan.yuukicore.service.RedisService;
 import com.malaxiaoyugan.yuukicore.service.SmsService;
 import com.malaxiaoyugan.yuukicore.service.VerificationCodeService;
 import com.malaxiaoyugan.yuukicore.utils.GsonUtils;
-import com.malaxiaoyugan.yuukicore.utils.Params;
+import com.malaxiaoyugan.yuukicore.constants.Params;
 import com.malaxiaoyugan.yuukicore.utils.StringListUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
@@ -30,9 +31,9 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
         String code = RandomStringUtils.randomNumeric(6);
         smsService.sendMessageByAliyun(phone, code);
         redisService
-                .set(Params.VERIFYCODE_KEY + phone, GsonUtils.getGson().toJson(StringListUtils
+                .set(PassPortConst.CAPTCHA + phone, GsonUtils.getGson().toJson(StringListUtils
                                 .oneStringToList(code)), 120, TimeUnit.SECONDS,
-                        Params.VERIFYCODE_KEY);
+                        PassPortConst.CAPTCHA);
         return code;
 
     }
@@ -40,7 +41,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
     @Override
     public boolean checkVerifyCode(String phone,String verificationCode) {
         String code = StringListUtils.listToOneString(GsonUtils.getGson().fromJson(redisService
-                .get(Params.VERIFYCODE_KEY + phone, Params.VERIFYCODE_KEY), List
+                .get(PassPortConst.CAPTCHA + phone, PassPortConst.CAPTCHA), List
                 .class));
         return verificationCode.equals(code);
     }
