@@ -43,18 +43,20 @@ public class ShiroService {
          */
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
         // 配置退出过滤器,其中的具体的退出代码Shiro已经替我们实现了
-        filterChainDefinitionMap.put("/passport/logout", "logout");
-        filterChainDefinitionMap.put("/passport/login", "anon");
-        filterChainDefinitionMap.put("/passport/register", "anon");
-        filterChainDefinitionMap.put("/websocket", "anon");
-        filterChainDefinitionMap.put("/favicon.ico", "anon");
-        filterChainDefinitionMap.put("/error", "anon");
-        filterChainDefinitionMap.put("/assets/**", "anon");
-        filterChainDefinitionMap.put("/plugin/**", "anon");
-        filterChainDefinitionMap.put("/vendors/**", "anon");
-        filterChainDefinitionMap.put("/getKaptcha", "anon");
-
-        filterChainDefinitionMap.put("/passport/test", "anon");
+        filterChainDefinitionMap.put("/passport/logout", "restFilter,logout");
+        filterChainDefinitionMap.put("/passport/login", "restFilter,anon");
+        filterChainDefinitionMap.put("/passport/register", "restFilter,anon");
+        filterChainDefinitionMap.put("/websocket", "restFilter,anon");
+        filterChainDefinitionMap.put("/favicon.ico", "restFilter,anon");
+        filterChainDefinitionMap.put("/error", "restFilter,anon");
+        filterChainDefinitionMap.put("/assets/**", "restFilter,anon");
+        filterChainDefinitionMap.put("/plugin/**", "restFilter,anon");
+        filterChainDefinitionMap.put("/vendors/**", "restFilter,anon");
+        filterChainDefinitionMap.put("/getKaptcha", "restFilter,anon");
+        //图片验证码
+        filterChainDefinitionMap.put("/verifyImage", "anon");
+        //首页
+        filterChainDefinitionMap.put("/index/**", "restFilter,token");
         // 加载数据库中配置的资源权限列表
        /* List<Resources> resourcesList = resourcesService.listUrlAndPermission();
         for (Resources resources : resourcesList) {
@@ -64,7 +66,7 @@ public class ShiroService {
             }
         }*/
         // 本博客中并不存在什么特别关键的操作，所以直接使用user认证。如果有朋友是参考本博客的shiro开发其他安全功能（比如支付等）时，建议针对这类操作使用authc权限
-        filterChainDefinitionMap.put("/**", "user");
+        filterChainDefinitionMap.put("/**", "restFilter,token");
         return filterChainDefinitionMap;
     }
 

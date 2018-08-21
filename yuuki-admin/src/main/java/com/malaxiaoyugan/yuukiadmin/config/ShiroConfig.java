@@ -1,6 +1,8 @@
 package com.malaxiaoyugan.yuukiadmin.config;
 
 
+import com.malaxiaoyugan.yuukiadmin.filter.LoginAuthorizationFilter;
+import com.malaxiaoyugan.yuukiadmin.filter.RestFilter;
 import com.malaxiaoyugan.yuukiadmin.shiro.ShiroRealm;
 import com.malaxiaoyugan.yuukiadmin.shiro.ShiroService;
 import com.malaxiaoyugan.yuukiadmin.shiro.credentials.RetryLimitCredentialsMatcher;
@@ -27,6 +29,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.annotation.Order;
 
+import javax.servlet.Filter;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -77,14 +81,21 @@ public class ShiroConfig {
     @Bean(name = "shiroFilter")
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+
+
         // 必须设置 SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
+
+        Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
+        filters.put("token", new LoginAuthorizationFilter());
+        filters.put("restFilter", new RestFilter());
+        shiroFilterFactoryBean.setFilters(filters);
+        /*// 如果不设置默认会自动寻找Web工程根目录下的"/login"页面
         shiroFilterFactoryBean.setLoginUrl("/passport/login/");
         // 登录成功后要跳转的链接
-        shiroFilterFactoryBean.setSuccessUrl("/");
+        shiroFilterFactoryBean.setSuccessUrl("/index");
         // 未授权界面;
-        shiroFilterFactoryBean.setUnauthorizedUrl("/error/403");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/error/403");*/
         // 配置数据库中的resource
         Map<String, String> filterChainDefinitionMap = shiroService.loadFilterChainDefinitions();
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
@@ -102,13 +113,13 @@ public class ShiroConfig {
     @Bean(name = "securityManager")
     public SecurityManager securityManager(@Qualifier("shiroRealm") ShiroRealm authRealm) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        // 设置realm.
-        securityManager.setRealm(authRealm);
         securityManager.setCacheManager(redisCacheManager());
         // 自定义session管理 使用redis
         securityManager.setSessionManager(sessionManager());
         // 注入记住我管理器
         securityManager.setRememberMeManager(rememberMeManager());
+        // 设置realm.
+        securityManager.setRealm(authRealm);
         return securityManager;
     }
 
@@ -196,6 +207,9 @@ public class ShiroConfig {
     public DefaultWebSessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         sessionManager.setSessionDAO(redisSessionDAO());
+        // 定时清理失效会话, 清理用户直接关闭浏览器造成的孤立会话
+        sessionManager.setSessionValidationSchedulerEnabled(true);
+
         return sessionManager;
     }
 

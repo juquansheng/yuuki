@@ -1,6 +1,9 @@
 package com.malaxiaoyugan.yuukiadmin.config;
 
 
+import com.malaxiaoyugan.yuukiadmin.filter.RestFilter;
+import org.apache.catalina.filters.RequestFilter;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -13,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class WebConfiguration {
 
-    @Bean
+    /*@Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurerAdapter() {
             @Override
@@ -24,14 +27,14 @@ public class WebConfiguration {
                         .allowedOrigins("*").allowCredentials(true);
             }
         };
-    }
+    }*/
 
-    /*@Bean
+   /* @Bean
     public FilterRegistrationBean testFilterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(new RequestFilter());
+        registration.setFilter(new RestFilter());
         registration.addUrlPatterns("/*");
-        registration.setName("requestFilter");
+        registration.setName("restFilter");
         registration.setOrder(1);
         return registration;
     }*/

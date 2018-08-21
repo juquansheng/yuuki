@@ -5,6 +5,7 @@ public class LoginVo {
     private String password;
     private boolean rememberMe;
     //图片验证码
+    private String verifyCode;
     private String verifyCodeKey;
 
     public String getUserName() {
@@ -29,6 +30,14 @@ public class LoginVo {
 
     public void setRememberMe(boolean rememberMe) {
         this.rememberMe = rememberMe;
+    }
+
+    public String getVerifyCode() {
+        return verifyCode;
+    }
+
+    public void setVerifyCode(String verifyCode) {
+        this.verifyCode = verifyCode;
     }
 
     public String getVerifyCodeKey() {

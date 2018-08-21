@@ -21,4 +21,14 @@ public class CommonConst {
      */
     public static final int DEFAULT_SUCCESS_CODE = 200;
 
+    /**
+     * 程序未登录
+     */
+    public static final int UN_LOGIN = 401;
+
+    /**
+     * 操作未授权
+     */
+    public static final int UN_AUTH = 402;
+
 }

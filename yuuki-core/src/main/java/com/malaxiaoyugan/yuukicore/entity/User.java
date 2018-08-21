@@ -1,8 +1,10 @@
 package com.malaxiaoyugan.yuukicore.entity;
 
+import com.malaxiaoyugan.yuukicore.framework.object.AbstractBO;
+
 import java.util.Date;
 
-public class User {
+public class User extends AbstractBO {
     private Long id;
 
     private String userName;

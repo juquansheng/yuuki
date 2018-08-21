@@ -40,6 +40,20 @@ public class TTBFResultUtil {
         return vo(CommonConst.DEFAULT_ERROR_CODE, message, null);
     }
 
+    public static ResponseVO unLogin(String message) {
+        return vo(CommonConst.UN_LOGIN, message, null);
+    }
+    public static ResponseVO unLogin(String message, Object data) {
+        return vo(CommonConst.UN_LOGIN, message, data);
+    }
+
+    public static ResponseVO unAuth(String message) {
+        return vo(CommonConst.UN_AUTH, message, null);
+    }
+    public static ResponseVO unAuth(String message, Object data) {
+        return vo(CommonConst.UN_AUTH, message, data);
+    }
+
     public static ResponseVO success(String message, Object data) {
         return vo(CommonConst.DEFAULT_SUCCESS_CODE, message, data);
     }

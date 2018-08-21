@@ -42,7 +42,7 @@ public class CaptchaController {
         response.setContentType("image/jpeg");
         ServletOutputStream out = response.getOutputStream();
         try {
-            String verifyCode = VerifyCodeUtils.outputVerifyImage(200, 50, out, 4);
+            String verifyCode = VerifyCodeUtils.outputVerifyImage(155, 40, out, 4);
             redisService.set(PassPortConst.VERIFYCODE_KEY + timeStamp, verifyCode, 60 * 2, TimeUnit.SECONDS,
                     PassPortConst.VERIFYCODE_KEY);
             Cookie cookie = new Cookie("verifyKey", timeStamp);
