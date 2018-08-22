@@ -5,10 +5,14 @@ import com.malaxiaoyugan.yuukicore.entity.User;
 import com.malaxiaoyugan.yuukicore.framework.object.ResponseVO;
 import com.malaxiaoyugan.yuukicore.utils.TTBFResultUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Slf4j
@@ -17,8 +21,10 @@ import java.util.List;
 public class IndexController {
 
     @RequestMapping(value = "/test",method = RequestMethod.GET)
-    public ResponseVO test() {
-
+    public ResponseVO test(HttpServletRequest request, HttpServletResponse response) {
+        //获取用户id
+        Object principals = SecurityUtils.getSubject().getPrincipals();
+        long id = Long.parseLong(principals.toString());
         User user = new User();
         User user1 = new User();
         User user2 = new User();

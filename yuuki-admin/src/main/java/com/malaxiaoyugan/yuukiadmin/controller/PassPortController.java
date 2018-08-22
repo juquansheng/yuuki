@@ -106,10 +106,10 @@ public class PassPortController {
     }
 
 
-    @RequestMapping(value = "/register",method = RequestMethod.GET)
-    public ResponseVO test() {
+    @RequestMapping(value = "/logout",method = RequestMethod.GET)
+    public ResponseVO logout() {
 
-            return TTBFResultUtil.success(testService.test(),userService.getUserById(1L));
+            return TTBFResultUtil.success("退出成功");
 
     }
 }

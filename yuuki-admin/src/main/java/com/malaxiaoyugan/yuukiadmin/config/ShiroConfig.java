@@ -3,6 +3,7 @@ package com.malaxiaoyugan.yuukiadmin.config;
 
 import com.malaxiaoyugan.yuukiadmin.filter.LoginAuthorizationFilter;
 import com.malaxiaoyugan.yuukiadmin.filter.RestFilter;
+import com.malaxiaoyugan.yuukiadmin.filter.TTBFLogoutFilter;
 import com.malaxiaoyugan.yuukiadmin.shiro.ShiroRealm;
 import com.malaxiaoyugan.yuukiadmin.shiro.ShiroService;
 import com.malaxiaoyugan.yuukiadmin.shiro.credentials.RetryLimitCredentialsMatcher;
@@ -89,6 +90,7 @@ public class ShiroConfig {
         Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
         filters.put("token", new LoginAuthorizationFilter());
         filters.put("restFilter", new RestFilter());
+        filters.put("TTBFLogout",new TTBFLogoutFilter());
         shiroFilterFactoryBean.setFilters(filters);
         /*// 如果不设置默认会自动寻找Web工程根目录下的"/login"页面
         shiroFilterFactoryBean.setLoginUrl("/passport/login/");

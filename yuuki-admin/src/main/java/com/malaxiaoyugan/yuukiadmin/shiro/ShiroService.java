@@ -43,7 +43,7 @@ public class ShiroService {
          */
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
         // 配置退出过滤器,其中的具体的退出代码Shiro已经替我们实现了
-        filterChainDefinitionMap.put("/passport/logout", "restFilter,logout");
+        filterChainDefinitionMap.put("/passport/logout", "restFilter,TTBFLogout");
         filterChainDefinitionMap.put("/passport/login", "restFilter,anon");
         filterChainDefinitionMap.put("/passport/register", "restFilter,anon");
         filterChainDefinitionMap.put("/websocket", "restFilter,anon");
