@@ -6,8 +6,10 @@ import com.malaxiaoyugan.yuukicore.framework.object.ResponseVO;
 import com.malaxiaoyugan.yuukicore.framework.property.AppProperties;
 import com.malaxiaoyugan.yuukicore.service.RedisService;
 import com.malaxiaoyugan.yuukicore.service.UserService;
+import com.malaxiaoyugan.yuukicore.service.VerificationCodeService;
 import com.malaxiaoyugan.yuukicore.utils.PasswordUtil;
 import com.malaxiaoyugan.yuukicore.utils.SessionUtil;
+import com.malaxiaoyugan.yuukicore.utils.TTBFResult;
 import com.malaxiaoyugan.yuukicore.utils.TTBFResultUtil;
 import com.malaxiaoyugan.yuukicore.vo.LoginVo;
 import com.malaxiaoyugan.yuukicore.vo.RegisterVo;
@@ -48,6 +50,8 @@ public class PassPortController {
     private RedisService redisService;
     @Autowired
     private TestService testService;
+    @Autowired
+    private VerificationCodeService verificationCodeService;
 
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
@@ -81,6 +85,11 @@ public class PassPortController {
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     public ResponseVO register(@RequestBody RegisterVo registerVo, HttpServletRequest request,
                                HttpServletResponse response) throws Exception {
+
+        boolean checkVerifyCode = verificationCodeService.checkVerifyCode(registerVo.getPhone(), registerVo.getCaptcha());
+        if (!checkVerifyCode){
+            return TTBFResultUtil.error("验证码错误");
+        }
         try {
             //判断用户名是否已经使用
             if (userService.getUserByName(registerVo.getUserName()) != null){
@@ -97,8 +106,17 @@ public class PassPortController {
             user.setUpdateTime(new Date());
             user.setCreateTime(new Date());
             user.setLastLoginTime(new Date());
-            userService.insertUser(user);
-            return TTBFResultUtil.success("注册成功！");
+            User insertUser = userService.insertUser(user);
+            if (insertUser == null){
+                return TTBFResultUtil.error("注册失败");
+            }
+
+            UsernamePasswordToken token = new UsernamePasswordToken(registerVo.getUserName(), registerVo.getPassword(), true);
+            //获取当前的Subject
+            Subject currentUser = SecurityUtils.getSubject();
+            currentUser.login(token);
+            //跳转登陆接口
+            return TTBFResultUtil.success("登录成功！");
         }catch (Exception e){
             log.error("注册失败", e);
             return TTBFResultUtil.error(e.getMessage());

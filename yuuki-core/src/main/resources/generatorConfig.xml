@@ -50,7 +50,7 @@
 
 
 
-    <table tableName="group" domainObjectName="Group" enableCountByExample="true"
+    <!--<table tableName="group" domainObjectName="Group" enableCountByExample="true"
            enableSelectByExample="true"/>
     <table tableName="group_right" domainObjectName="GroupRight" enableCountByExample="true"
            enableSelectByExample="true"/>
@@ -69,8 +69,8 @@
     <table tableName="user_group" domainObjectName="UserGroup" enableCountByExample="true"
            enableSelectByExample="true"/>
     <table tableName="user_right" domainObjectName="UserRight" enableCountByExample="true"
-           enableSelectByExample="true"/>
-    <table tableName="user_role" domainObjectName="UserRole" enableCountByExample="true"
+           enableSelectByExample="true"/>-->
+    <table tableName="mail_param" domainObjectName="MailParam" enableCountByExample="true"
            enableSelectByExample="true"/>
 
 

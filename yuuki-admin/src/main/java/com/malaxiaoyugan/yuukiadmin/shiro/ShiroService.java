@@ -46,7 +46,6 @@ public class ShiroService {
         filterChainDefinitionMap.put("/passport/logout", "restFilter,TTBFLogout");
         filterChainDefinitionMap.put("/passport/login", "restFilter,anon");
         filterChainDefinitionMap.put("/passport/register", "restFilter,anon");
-        filterChainDefinitionMap.put("/websocket", "restFilter,anon");
         filterChainDefinitionMap.put("/favicon.ico", "restFilter,anon");
         filterChainDefinitionMap.put("/error", "restFilter,anon");
         filterChainDefinitionMap.put("/assets/**", "restFilter,anon");
