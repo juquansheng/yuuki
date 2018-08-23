@@ -55,7 +55,9 @@ public class ShiroService {
         //图片验证码
         filterChainDefinitionMap.put("/verifyImage", "anon");
         //首页
-        filterChainDefinitionMap.put("/index/**", "restFilter,token");
+        filterChainDefinitionMap.put("/index/**", "restFilter,anon");
+        //个人中心
+        filterChainDefinitionMap.put("/profile/**", "restFilter,token");
         // 加载数据库中配置的资源权限列表
        /* List<Resources> resourcesList = resourcesService.listUrlAndPermission();
         for (Resources resources : resourcesList) {

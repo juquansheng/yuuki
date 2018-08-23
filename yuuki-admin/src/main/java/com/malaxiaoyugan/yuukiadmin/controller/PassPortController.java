@@ -41,15 +41,10 @@ import java.util.Date;
 @RestController
 @RequestMapping(value = "passport")
 public class PassPortController {
-
-    @Autowired
-    private AppProperties config;
     @Autowired
     private UserService userService;
     @Autowired
     private RedisService redisService;
-    @Autowired
-    private TestService testService;
     @Autowired
     private VerificationCodeService verificationCodeService;
 
@@ -124,10 +119,23 @@ public class PassPortController {
     }
 
 
+    /**
+     * 退出登陆接口
+     */
     @RequestMapping(value = "/logout",method = RequestMethod.GET)
-    public ResponseVO logout() {
+    public void logout() {
+    }
 
-            return TTBFResultUtil.success("退出成功");
-
+    /**
+     * 判断是否登陆接口
+     */
+    @RequestMapping(value = "/islogin",method = RequestMethod.GET)
+    public ResponseVO isLogin() {
+        Object principals = SecurityUtils.getSubject().getPrincipals();
+        if (principals != null){
+            return TTBFResultUtil.success("已登陆");
+        }else {
+            return TTBFResultUtil.error("未登录");
+        }
     }
 }
