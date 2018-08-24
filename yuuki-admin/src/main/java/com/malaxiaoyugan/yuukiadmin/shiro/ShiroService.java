@@ -40,6 +40,8 @@ public class ShiroService {
             - anon:所有url都都可以匿名访问
             - authc: 需要认证才能进行访问（此处指所有非匿名的路径都需要登陆才能访问）
             - user:配置记住我或认证通过可以访问
+            - restFilter自定义过滤器设置跨域
+            - token自定义登陆过滤器
          */
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
         // 配置退出过滤器,其中的具体的退出代码Shiro已经替我们实现了
@@ -51,7 +53,10 @@ public class ShiroService {
         filterChainDefinitionMap.put("/assets/**", "restFilter,anon");
         filterChainDefinitionMap.put("/plugin/**", "restFilter,anon");
         filterChainDefinitionMap.put("/vendors/**", "restFilter,anon");
-        filterChainDefinitionMap.put("/getKaptcha", "restFilter,anon");
+        //文件上传获取
+        filterChainDefinitionMap.put("/file/**", "restFilter,anon");
+        //验证码
+        filterChainDefinitionMap.put("/code/**", "restFilter,anon");
         //图片验证码
         filterChainDefinitionMap.put("/verifyImage", "anon");
         //首页

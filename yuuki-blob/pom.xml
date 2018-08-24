@@ -24,6 +24,13 @@
         <scope>compile</scope>
     </dependency>
 
+        <!--文件上传-->
+        <dependency>
+            <groupId>com.luhuiguo</groupId>
+            <artifactId>fastdfs-spring-boot-starter</artifactId>
+            <version>0.2.0</version>
+        </dependency>
+
     </dependencies>
 
 
