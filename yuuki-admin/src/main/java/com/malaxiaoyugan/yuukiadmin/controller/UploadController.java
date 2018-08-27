@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 文件上传接口
@@ -34,21 +36,43 @@ public class UploadController {
      * @param file
      * @return
      */
-    @RequestMapping(value = "/imgUpload")
+    @RequestMapping(value = "/fileupload")
     @ResponseBody
     public ResponseVO upload(MultipartFile file) {
         try {
-
-
             StorePath storePath = fastFileStorageClient.uploadFile(file.getInputStream(), file
                             .getSize(),
                     file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf
                             (".") + 1, file.getOriginalFilename().length()), null);
-            System.out.println(storePath.getFullPath());
             String flieName = storePath.getFullPath().substring(17, storePath.getFullPath().length());
-            System.out.println(flieName);
             String filePath = "http://file.malaxiaoyugan.com/group1/M00/00/00/" + flieName;
             return TTBFResultUtil.success( "图片上传成功", filePath);
+        } catch (IOException e) {
+            return TTBFResultUtil.error("服务器异常");
+        }
+    }
+
+    /**
+     * 多文件上传
+     * @param files
+     * @return
+     */
+    @RequestMapping(value = "/filesupload")
+    @ResponseBody
+    public ResponseVO uploads(MultipartFile[] files) {
+        // 上传文件返回的路径集合
+        List<String> arrayList = new ArrayList<String>();
+        try {
+            for (MultipartFile file:files){
+                StorePath storePath = fastFileStorageClient.uploadFile(file.getInputStream(), file
+                                .getSize(),
+                        file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf
+                                (".") + 1, file.getOriginalFilename().length()), null);
+                String flieName = storePath.getFullPath().substring(17, storePath.getFullPath().length());
+                String filePath = "http://file.malaxiaoyugan.com/group1/M00/00/00/" + flieName;
+                arrayList.add(filePath);
+            }
+            return TTBFResultUtil.success( "图片上传成功", arrayList);
         } catch (IOException e) {
             return TTBFResultUtil.error("服务器异常");
         }
