@@ -44,7 +44,11 @@ public class UploadController {
                             .getSize(),
                     file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf
                             (".") + 1, file.getOriginalFilename().length()), null);
-            return TTBFResultUtil.success( "图片上传成功", storePath.getFullPath());
+            System.out.println(storePath.getFullPath());
+            String flieName = storePath.getFullPath().substring(17, storePath.getFullPath().length());
+            System.out.println(flieName);
+            String filePath = "http://file.malaxiaoyugan.com/group1/M00/00/00/" + flieName;
+            return TTBFResultUtil.success( "图片上传成功", filePath);
         } catch (IOException e) {
             return TTBFResultUtil.error("服务器异常");
         }
