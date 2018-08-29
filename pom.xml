@@ -25,42 +25,42 @@
     <java.version>1.8</java.version>
   </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
+  <modules>
+    <module>yuuki-core</module>
+    <module>yuuki-admin</module>
+    <module>yuuki-blob</module>
+  </modules>
+
+  <dependencyManagement>
+    <!-- 模块说明：这里声明多个子模块 -->
+    <dependencies>
+      <!--子版本依赖-->
+      <dependency>
+        <groupId>com.uuworlds</groupId>
+        <artifactId>yuuki-core</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <scope>compile</scope>
     </dependency>
+      <dependency>
+        <groupId>com.uuworlds</groupId>
+        <artifactId>yuuki-admin</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <scope>compile</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.uuworlds</groupId>
+        <artifactId>yuuki-blob</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <scope>compile</scope>
+      </dependency>
 
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency>
+    </dependencies>
+  </dependencyManagement>
 
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-
-
-
-    <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
-      <version>4.5.2</version>
-    </dependency>
-  </dependencies>
 
   <build>
     <finalName>yuuki</finalName>
     <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-
-
       <!-- mybatis代码生成器 -->
       <plugin>
         <groupId>org.mybatis.generator</groupId>
@@ -74,10 +74,6 @@
     </plugins>
   </build>
 
-  <modules>
-    <module>yuuki-core</module>
-    <module>yuuki-admin</module>
-    <module>yuuki-blob</module>
-  </modules>
+
 
 </project>
