@@ -15,13 +15,6 @@ public class EmailUtils {
 
 
 
-    private static String SMTP_HOST = "smtp.qq.com"; // qq
-    private static String USER_NAME = "598714905@qq.com"; // 邮箱账户
-    private static String PASS_WORD = "fvaeedlbzavobchc"; // 邮箱授权码
-
-    private static String FROM = "598714905@qq.com"; // 使用当前账户
-    //public static String activeUrl = "激活路径";
-
     /**
      *发送邮件
      * @param subject
