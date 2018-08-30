@@ -70,8 +70,15 @@
            enableSelectByExample="true"/>
     <table tableName="user_right" domainObjectName="UserRight" enableCountByExample="true"
            enableSelectByExample="true"/>-->
-    <table tableName="mail_param" domainObjectName="MailParam" enableCountByExample="true"
-           enableSelectByExample="true"/>
+    <table tableName="comment" domainObjectName="Comment" enableCountByExample="true"
+           enableSelectByExample="true">
+      <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+    </table>
+
+    <table tableName="reply" domainObjectName="Reply" enableCountByExample="true"
+           enableSelectByExample="true">
+      <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+    </table>
 
 
 

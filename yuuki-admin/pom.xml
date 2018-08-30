@@ -106,7 +106,7 @@
         </dependency>
         <dependency>
             <groupId>com.uuworlds</groupId>
-            <artifactId>yuuki-core</artifactId>
+            <artifactId>yuuki-blob</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
