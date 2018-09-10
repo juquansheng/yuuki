@@ -4,6 +4,8 @@ package com.malaxiaoyugan.yuukiadmin.controller;
 
 import com.luhuiguo.fastdfs.domain.StorePath;
 import com.luhuiguo.fastdfs.service.FastFileStorageClient;
+import com.malaxiaoyugan.yuukiadmin.utils.Result;
+import com.malaxiaoyugan.yuukiadmin.utils.TTBFHttpUtils;
 import com.malaxiaoyugan.yuukicore.framework.object.ResponseVO;
 import com.malaxiaoyugan.yuukicore.utils.TTBFResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +25,13 @@ import java.util.List;
 @RequestMapping(value = "/file")
 public class UploadController {
 
-    private final FastFileStorageClient fastFileStorageClient;
+    private  FastFileStorageClient fastFileStorageClient;
 
     @Autowired
     public UploadController(FastFileStorageClient fastFileStorageClient) {
         this.fastFileStorageClient = fastFileStorageClient;
     }
+
 
 
     /**
@@ -78,4 +81,20 @@ public class UploadController {
         }
     }
 
+    /**
+     * 单个文件上传
+     * @param file
+     * @return
+     */
+    @RequestMapping(value = "/test")
+    @ResponseBody
+    public ResponseVO test(MultipartFile file) {
+        try {
+
+            Result result = TTBFHttpUtils.post("http://ttbf.malaxiaoyugan.com/yuuki/file/fileupload", file.getInputStream(), file.getName());
+            return TTBFResultUtil.success( "图片上传成功", result);
+        } catch (IOException e) {
+            return TTBFResultUtil.error("服务器异常");
+        }
+    }
 }

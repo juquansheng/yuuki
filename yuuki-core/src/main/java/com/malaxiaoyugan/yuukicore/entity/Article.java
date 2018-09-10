@@ -9,6 +9,8 @@ public class Article {
 
     private String title;
 
+    private String introduce;
+
     private String tag;
 
     private Long type;
@@ -47,6 +49,14 @@ public class Article {
 
     public void setTitle(String title) {
         this.title = title == null ? null : title.trim();
+    }
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce == null ? null : introduce.trim();
     }
 
     public String getTag() {

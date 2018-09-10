@@ -5,6 +5,7 @@
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="introduce" property="introduce" jdbcType="VARCHAR" />
     <result column="tag" property="tag" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="BIGINT" />
     <result column="top" property="top" jdbcType="INTEGER" />
@@ -75,7 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, user_id, title, tag, type, top, status, browse_times, update_time, create_time
+    id, user_id, title, introduce, tag, type, top, status, browse_times, update_time, 
+    create_time
   </sql>
   <sql id="Blob_Column_List" >
     content
@@ -132,14 +134,14 @@
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into article (user_id, title, tag, 
-      type, top, status, browse_times, 
-      update_time, create_time, content
-      )
-    values (#{userId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR}, 
-      #{type,jdbcType=BIGINT}, #{top,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{browseTimes,jdbcType=INTEGER}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARBINARY}
-      )
+    insert into article (user_id, title, introduce, 
+      tag, type, top, status, 
+      browse_times, update_time, create_time, 
+      content)
+    values (#{userId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR}, 
+      #{tag,jdbcType=VARCHAR}, #{type,jdbcType=BIGINT}, #{top,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{browseTimes,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{content,jdbcType=LONGVARBINARY})
   </insert>
   <insert id="insertSelective" parameterType="com.malaxiaoyugan.yuukicore.entity.Article" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -152,6 +154,9 @@
       </if>
       <if test="title != null" >
         title,
+      </if>
+      <if test="introduce != null" >
+        introduce,
       </if>
       <if test="tag != null" >
         tag,
@@ -184,6 +189,9 @@
       </if>
       <if test="title != null" >
         #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null" >
+        #{introduce,jdbcType=VARCHAR},
       </if>
       <if test="tag != null" >
         #{tag,jdbcType=VARCHAR},
@@ -229,6 +237,9 @@
       <if test="record.title != null" >
         title = #{record.title,jdbcType=VARCHAR},
       </if>
+      <if test="record.introduce != null" >
+        introduce = #{record.introduce,jdbcType=VARCHAR},
+      </if>
       <if test="record.tag != null" >
         tag = #{record.tag,jdbcType=VARCHAR},
       </if>
@@ -263,6 +274,7 @@
     set id = #{record.id,jdbcType=BIGINT},
       user_id = #{record.userId,jdbcType=BIGINT},
       title = #{record.title,jdbcType=VARCHAR},
+      introduce = #{record.introduce,jdbcType=VARCHAR},
       tag = #{record.tag,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=BIGINT},
       top = #{record.top,jdbcType=INTEGER},
@@ -280,6 +292,7 @@
     set id = #{record.id,jdbcType=BIGINT},
       user_id = #{record.userId,jdbcType=BIGINT},
       title = #{record.title,jdbcType=VARCHAR},
+      introduce = #{record.introduce,jdbcType=VARCHAR},
       tag = #{record.tag,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=BIGINT},
       top = #{record.top,jdbcType=INTEGER},
@@ -299,6 +312,9 @@
       </if>
       <if test="title != null" >
         title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null" >
+        introduce = #{introduce,jdbcType=VARCHAR},
       </if>
       <if test="tag != null" >
         tag = #{tag,jdbcType=VARCHAR},
@@ -331,6 +347,7 @@
     update article
     set user_id = #{userId,jdbcType=BIGINT},
       title = #{title,jdbcType=VARCHAR},
+      introduce = #{introduce,jdbcType=VARCHAR},
       tag = #{tag,jdbcType=VARCHAR},
       type = #{type,jdbcType=BIGINT},
       top = #{top,jdbcType=INTEGER},
@@ -345,6 +362,7 @@
     update article
     set user_id = #{userId,jdbcType=BIGINT},
       title = #{title,jdbcType=VARCHAR},
+      introduce = #{introduce,jdbcType=VARCHAR},
       tag = #{tag,jdbcType=VARCHAR},
       type = #{type,jdbcType=BIGINT},
       top = #{top,jdbcType=INTEGER},
