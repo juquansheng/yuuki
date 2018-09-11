@@ -109,11 +109,11 @@
             </exclusions>
         </dependency>
 
-        <!--pagehelper-->
+        <!-- 分页插件 -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.2.3</version>
+            <version>1.1.1</version>
         </dependency>
 
 
@@ -184,6 +184,10 @@
     </dependencies>
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
             <!-- mybatis代码生成器 -->
             <plugin>
                 <groupId>org.mybatis.generator</groupId>

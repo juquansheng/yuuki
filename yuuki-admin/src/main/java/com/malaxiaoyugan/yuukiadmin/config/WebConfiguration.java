@@ -29,7 +29,7 @@ public class WebConfiguration {
         };
     }*/
 
-   /* @Bean
+    @Bean
     public FilterRegistrationBean testFilterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(new RestFilter());
@@ -37,5 +37,5 @@ public class WebConfiguration {
         registration.setName("restFilter");
         registration.setOrder(1);
         return registration;
-    }*/
+    }
 }

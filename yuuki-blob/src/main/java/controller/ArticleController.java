@@ -6,6 +6,7 @@ import com.malaxiaoyugan.yuukicore.service.ArticleService;
 import com.malaxiaoyugan.yuukicore.utils.ListUtils;
 import com.malaxiaoyugan.yuukicore.utils.TTBFResultUtil;
 import com.malaxiaoyugan.yuukicore.vo.ArticleVo;
+import com.malaxiaoyugan.yuukicore.vo.PageBean;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.BeanUtils;
@@ -84,13 +85,13 @@ public class ArticleController {
      * @param article
      * @return
      */
-    @RequestMapping(value = "/getlist",method = RequestMethod.GET)
+    @RequestMapping(value = "/getlist",method = RequestMethod.POST)
     public ResponseVO getList(@RequestBody Article article,@RequestParam("page") Integer page,
                               @RequestParam("rows") Integer rows) {
-        List<Article> list = articleService.getList(article, page, rows);
-        if (ListUtils.isEmpty(list)){
+        PageBean pageBean = articleService.getList(article, page, rows);
+        if (ListUtils.isEmpty(pageBean.getPageDatas())){
             return TTBFResultUtil.error("未获取到文章");
         }
-        return TTBFResultUtil.success("获取成功",list);
+        return TTBFResultUtil.success("获取成功",pageBean);
     }
 }

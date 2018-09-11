@@ -7,6 +7,16 @@ public class ArticleVo extends Article {
 
     private String contentString;
 
+    private String createTimeString;
+
+    public String getCreateTimeString() {
+        return createTimeString;
+    }
+
+    public void setCreateTimeString(String createTimeString) {
+        this.createTimeString = createTimeString;
+    }
+
     public String getContentString() {
         return contentString;
     }

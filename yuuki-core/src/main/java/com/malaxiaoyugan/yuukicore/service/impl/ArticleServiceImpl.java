@@ -2,6 +2,7 @@ package com.malaxiaoyugan.yuukicore.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
 import com.malaxiaoyugan.yuukicore.entity.Article;
 import com.malaxiaoyugan.yuukicore.entity.ArticleExample;
 import com.malaxiaoyugan.yuukicore.entity.User;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +28,8 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleMapper articleMapper;
     @Autowired
     private UserMapper userMapper;
+
+
 
     @Override
     public Article update(Article article,String introduce, Long userId) {
@@ -71,6 +75,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public PageBean getList(Article article, int page, int rows) {
+        String s="yyyy-MM-dd hh:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(s);
         ArticleExample articleExample = new ArticleExample();
         ArticleExample.Criteria criteria = articleExample.createCriteria();
         //选择条件
@@ -82,10 +88,19 @@ public class ArticleServiceImpl implements ArticleService {
             PageHelper.startPage(page, rows);
         }
         List<Article> articleList = articleMapper.selectByExample(articleExample);
-        PageBean<Article> pageBean = new PageBean<>();
+        List<ArticleVo> articleVoList = Lists.newArrayList();
+        for (Article articles:articleList){
+            ArticleVo articleVo = new ArticleVo();
+            BeanUtils.copyProperties(articles,articleVo);
+            articleVo.setNickName(userMapper.selectByPrimaryKey(articleVo.getUserId()).getNickName());
+            articleVo.setCreateTimeString(simpleDateFormat.format(articleVo.getCreateTime()));
+            articleVoList.add(articleVo);
+        }
+
+        PageBean<ArticleVo> pageBean = new PageBean<>();
         PageInfo<Article> pageInfo = new PageInfo<>(articleList);
         pageBean.setTotal(pageInfo.getTotal());
-        pageBean.setPageDatas(articleList);
+        pageBean.setPageDatas(articleVoList);
         return pageBean;
     }
 }

@@ -11,11 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import service.TestService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 
 /**
  *@describe
@@ -27,8 +23,7 @@ import java.util.Date;
 @RequestMapping(value = "test")
 public class TestController {
 
-    @Autowired
-    private TestService testService;
+
 
 
 
@@ -36,7 +31,7 @@ public class TestController {
     @RequestMapping(value = "/test",method = RequestMethod.GET)
     public ResponseVO test() {
 
-            return TTBFResultUtil.success("t",testService.test());
+            return TTBFResultUtil.success("t","test");
 
     }
 }
