@@ -94,4 +94,24 @@ public class ArticleController {
         }
         return TTBFResultUtil.success("获取成功",pageBean);
     }
+
+    /**
+     * 判断文章
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/isbelong",method = RequestMethod.GET)
+    public ResponseVO isbelong(@RequestParam("id") Long id) throws UnsupportedEncodingException {
+        Object principals = SecurityUtils.getSubject().getPrincipals();
+        if (principals != null){
+            long userId = Long.parseLong(principals.toString());
+            if (articleService.getDetail(id).getUserId() == id){
+                return TTBFResultUtil.success("可以编辑");
+            }
+            return TTBFResultUtil.error("没有编辑权限");
+        }else {
+            return TTBFResultUtil.unLogin("未登录");
+        }
+
+    }
 }
