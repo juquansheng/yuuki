@@ -39,7 +39,7 @@ public class ArticleServiceImpl implements ArticleService {
         }
         article.setIntroduce(introduce);
         article.setUpdateTime(new Date());
-        int updateByPrimaryKeyWithBLOBs = articleMapper.updateByPrimaryKeyWithBLOBs(article);
+        int updateByPrimaryKeyWithBLOBs = articleMapper.updateByPrimaryKeySelective(article);
         if (updateByPrimaryKeyWithBLOBs >0){
             return article;
         }else {

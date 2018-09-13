@@ -7,6 +7,15 @@ public class RegisterVo {
     private String captcha;
     private String phone;
     private String mail;
+    private String nickName;
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
     public String getUserName() {
         return userName;

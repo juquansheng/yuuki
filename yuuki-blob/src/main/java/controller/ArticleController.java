@@ -30,9 +30,12 @@ public class ArticleController {
      * @throws UnsupportedEncodingException
      */
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
-    public ResponseVO insert(ArticleVo articleVo) throws UnsupportedEncodingException {
+    public ResponseVO insert(@RequestBody ArticleVo articleVo) throws UnsupportedEncodingException {
         Article article = new Article();
         BeanUtils.copyProperties(articleVo,article);
+        if (articleVo.getContentString() == null){
+            return TTBFResultUtil.error("文章内容不能为空");
+        }
         article.setContent(articleVo.getContentString().getBytes("UTF-8"));
         String introduce;
         if (articleVo.getContentString().length() > 20){
@@ -41,12 +44,12 @@ public class ArticleController {
             introduce = articleVo.getContentString();
         }
 
+
         //转string
         //String isoString = new String(articleVo.getContentString().getBytes("UTF-8"),"UTF-8");
         //获取用户id
         Object principals = SecurityUtils.getSubject().getPrincipals();
-        //Long id = Long.parseLong(principals.toString());
-        Long id = 1L;
+        Long id = 3L;
         if (article.getId() == null){
             Article inset = articleService.inset(article, introduce,id);
             if (inset == null){
@@ -54,7 +57,9 @@ public class ArticleController {
             }
             return TTBFResultUtil.success("发布成功",inset);
         }else {
-            if (article.getUserId() != id){
+            //获取文章作者id
+            Long userId = articleService.getDetail(article.getId()).getUserId();
+            if (userId != id){
                 return TTBFResultUtil.error("没有修改权限");
             }
             Article update = articleService.update(article,introduce, id);
@@ -105,7 +110,7 @@ public class ArticleController {
         Object principals = SecurityUtils.getSubject().getPrincipals();
         if (principals != null){
             long userId = Long.parseLong(principals.toString());
-            if (articleService.getDetail(id).getUserId() == id){
+            if (articleService.getDetail(id).getUserId() == userId){
                 return TTBFResultUtil.success("可以编辑");
             }
             return TTBFResultUtil.error("没有编辑权限");

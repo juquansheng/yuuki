@@ -100,6 +100,7 @@ public class PassPortController {
             user.setUpdateTime(new Date());
             user.setCreateTime(new Date());
             user.setLastLoginTime(new Date());
+            user.setNickName(registerVo.getNickName());
             User insertUser = userService.insertUser(user);
             if (insertUser == null){
                 return TTBFResultUtil.error("注册失败");
