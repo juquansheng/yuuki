@@ -9,3 +9,9 @@
 邮件：javax.mail
 
 
+
+
+打包方式：
+1.先install core模块和其他子模块
+2.然后root打包或者admin入口模块打包即可
+3.jar包运行直接java -jar 项目名称
