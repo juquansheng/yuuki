@@ -63,7 +63,8 @@ public class ShiroService {
         filterChainDefinitionMap.put("/index/**", "restFilter,anon");
         //个人中心
         filterChainDefinitionMap.put("/profile/**", "restFilter,token");
-
+        //文章修改和添加
+        filterChainDefinitionMap.put("/article/edit", "restFilter,token");
         //测试接口
         filterChainDefinitionMap.put("/article/**", "anon");
         // 加载数据库中配置的资源权限列表

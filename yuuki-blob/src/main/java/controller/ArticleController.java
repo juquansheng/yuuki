@@ -49,7 +49,7 @@ public class ArticleController {
         //String isoString = new String(articleVo.getContentString().getBytes("UTF-8"),"UTF-8");
         //获取用户id
         Object principals = SecurityUtils.getSubject().getPrincipals();
-        Long id = 3L;
+        long id = Long.parseLong(principals.toString());
         if (article.getId() == null){
             Article inset = articleService.inset(article, introduce,id);
             if (inset == null){
@@ -125,7 +125,7 @@ public class ArticleController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/getlist",method = RequestMethod.POST)
+    @RequestMapping(value = "/delete",method = RequestMethod.GET)
     public ResponseVO deleteList(@RequestParam("id") Long id) {
         boolean deleteArticle = articleService.deleteArticle(id);
         if (deleteArticle){
