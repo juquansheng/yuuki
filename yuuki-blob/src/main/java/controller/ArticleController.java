@@ -101,7 +101,7 @@ public class ArticleController {
     }
 
     /**
-     * 判断文章
+     * 判断文章是否属于当前用户
      * @param id
      * @return
      */
@@ -118,5 +118,20 @@ public class ArticleController {
             return TTBFResultUtil.unLogin("未登录");
         }
 
+    }
+
+    /**
+     * 删除文章
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/getlist",method = RequestMethod.POST)
+    public ResponseVO deleteList(@RequestParam("id") Long id) {
+        boolean deleteArticle = articleService.deleteArticle(id);
+        if (deleteArticle){
+            return TTBFResultUtil.success("删除成功");
+
+        }
+        return TTBFResultUtil.error("为找到要删除文章");
     }
 }

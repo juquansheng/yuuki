@@ -103,4 +103,19 @@ public class ArticleServiceImpl implements ArticleService {
         pageBean.setPageDatas(articleVoList);
         return pageBean;
     }
+
+    @Override
+    public boolean deleteArticle(Long id) {
+        Article article = new Article();
+        article.setId(id);
+        article.setStatus(-1);
+        article.setUpdateTime(new Date());
+        int i = articleMapper.updateByPrimaryKeySelective(article);
+        if (i > 0){
+            return true;
+        }else {
+            return false;
+        }
+
+    }
 }

@@ -40,4 +40,11 @@ public interface ArticleService {
      * @return
      */
     PageBean getList(Article article, int page, int rows);
+
+    /**
+     * 删除文章
+     * @param id
+     * @return
+     */
+    boolean deleteArticle(Long id);
 }
