@@ -75,8 +75,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public PageBean getList(Article article, int page, int rows) {
-        String s="yyyy-MM-dd hh:mm:ss";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(s);
+        String time12="yyyy-MM-dd hh:mm:ss";
+        String time24="yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(time24);
         ArticleExample articleExample = new ArticleExample();
         ArticleExample.Criteria criteria = articleExample.createCriteria();
         //选择条件
