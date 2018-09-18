@@ -1,5 +1,7 @@
 package com.malaxiaoyugan.yuukicore.entity;
 
+import java.util.Date;
+
 public class Reply {
     private Long id;
 
@@ -12,6 +14,12 @@ public class Reply {
     private Integer type;
 
     private Long toUserId;
+
+    private Integer status;
+
+    private Date updateTime;
+
+    private Date createTime;
 
     private byte[] content;
 
@@ -61,6 +69,30 @@ public class Reply {
 
     public void setToUserId(Long toUserId) {
         this.toUserId = toUserId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public byte[] getContent() {

@@ -70,7 +70,7 @@
            enableSelectByExample="true"/>
     <table tableName="user_right" domainObjectName="UserRight" enableCountByExample="true"
            enableSelectByExample="true"/>-->
-    <table tableName="article" domainObjectName="Article" enableCountByExample="true"
+    <table tableName="reply" domainObjectName="Reply" enableCountByExample="true"
            enableSelectByExample="true">
       <generatedKey column="id" sqlStatement="MySql" identity="true"/>
     </table>

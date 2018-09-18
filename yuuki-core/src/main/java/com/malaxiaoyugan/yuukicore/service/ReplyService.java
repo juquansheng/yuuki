@@ -1,31 +1,30 @@
 package com.malaxiaoyugan.yuukicore.service;
 
-import com.malaxiaoyugan.yuukicore.entity.Comment;
+import com.malaxiaoyugan.yuukicore.entity.Reply;
 import com.malaxiaoyugan.yuukicore.vo.PageBean;
 
 import java.util.List;
 
-public interface CommentService {
+public interface ReplyService {
 
     /**
      * 添加评论
-     * @param comment
+     * @param reply
      * @return
      */
-    Comment insert(Comment comment);
+    Reply insert(Reply reply);
 
     /**
-     * 删除评论
+     * 删除回复
      * @param id
      */
     boolean delete(Long id);
 
     /**
-     * 获取评论列表
+     * 根据评论id获取评论下回复
      * @param id
-     * @param page
-     * @param rows
      * @return
      */
     PageBean list(Long id, int page, int rows);
+
 }

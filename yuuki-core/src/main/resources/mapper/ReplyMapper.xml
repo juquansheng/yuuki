@@ -8,6 +8,9 @@
     <result column="reply_id" property="replyId" jdbcType="BIGINT" />
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="to_user_id" property="toUserId" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.malaxiaoyugan.yuukicore.entity.Reply" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARBINARY" />
@@ -71,7 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, user_id, comment_id, reply_id, type, to_user_id
+    id, user_id, comment_id, reply_id, type, to_user_id, status, update_time, create_time
   </sql>
   <sql id="Blob_Column_List" >
     content
@@ -129,10 +132,12 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into reply (user_id, comment_id, reply_id, 
-      type, to_user_id, content
+      type, to_user_id, status, 
+      update_time, create_time, content
       )
     values (#{userId,jdbcType=BIGINT}, #{commentId,jdbcType=BIGINT}, #{replyId,jdbcType=BIGINT}, 
-      #{type,jdbcType=INTEGER}, #{toUserId,jdbcType=BIGINT}, #{content,jdbcType=LONGVARBINARY}
+      #{type,jdbcType=INTEGER}, #{toUserId,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARBINARY}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.malaxiaoyugan.yuukicore.entity.Reply" >
@@ -156,6 +161,15 @@
       <if test="toUserId != null" >
         to_user_id,
       </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
       <if test="content != null" >
         content,
       </if>
@@ -175,6 +189,15 @@
       </if>
       <if test="toUserId != null" >
         #{toUserId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="content != null" >
         #{content,jdbcType=LONGVARBINARY},
@@ -208,6 +231,15 @@
       <if test="record.toUserId != null" >
         to_user_id = #{record.toUserId,jdbcType=BIGINT},
       </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.content != null" >
         content = #{record.content,jdbcType=LONGVARBINARY},
       </if>
@@ -224,6 +256,9 @@
       reply_id = #{record.replyId,jdbcType=BIGINT},
       type = #{record.type,jdbcType=INTEGER},
       to_user_id = #{record.toUserId,jdbcType=BIGINT},
+      status = #{record.status,jdbcType=INTEGER},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
       content = #{record.content,jdbcType=LONGVARBINARY}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -236,7 +271,10 @@
       comment_id = #{record.commentId,jdbcType=BIGINT},
       reply_id = #{record.replyId,jdbcType=BIGINT},
       type = #{record.type,jdbcType=INTEGER},
-      to_user_id = #{record.toUserId,jdbcType=BIGINT}
+      to_user_id = #{record.toUserId,jdbcType=BIGINT},
+      status = #{record.status,jdbcType=INTEGER},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -259,6 +297,15 @@
       <if test="toUserId != null" >
         to_user_id = #{toUserId,jdbcType=BIGINT},
       </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="content != null" >
         content = #{content,jdbcType=LONGVARBINARY},
       </if>
@@ -272,6 +319,9 @@
       reply_id = #{replyId,jdbcType=BIGINT},
       type = #{type,jdbcType=INTEGER},
       to_user_id = #{toUserId,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
       content = #{content,jdbcType=LONGVARBINARY}
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -281,7 +331,10 @@
       comment_id = #{commentId,jdbcType=BIGINT},
       reply_id = #{replyId,jdbcType=BIGINT},
       type = #{type,jdbcType=INTEGER},
-      to_user_id = #{toUserId,jdbcType=BIGINT}
+      to_user_id = #{toUserId,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
