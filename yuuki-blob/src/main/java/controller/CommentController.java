@@ -5,10 +5,13 @@ import com.malaxiaoyugan.yuukicore.entity.Comment;
 import com.malaxiaoyugan.yuukicore.framework.object.ResponseVO;
 import com.malaxiaoyugan.yuukicore.service.CommentService;
 import com.malaxiaoyugan.yuukicore.utils.TTBFResultUtil;
+import com.malaxiaoyugan.yuukicore.vo.CommentVo;
 import com.malaxiaoyugan.yuukicore.vo.PageBean;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.UnsupportedEncodingException;
 
 
 @Slf4j
@@ -21,12 +24,16 @@ public class CommentController {
 
     /**
      * 添加评论
-     * @param comment
+     * @param commentVo
      * @return
      */
     @RequestMapping(value = "/insert",method = RequestMethod.POST)
-    public ResponseVO insert(@RequestBody Comment comment){
-        Comment insert = commentService.insert(comment);
+    public ResponseVO insert(@RequestBody CommentVo commentVo) throws UnsupportedEncodingException {
+        if (commentVo.getArticleId() == null){
+            return TTBFResultUtil.error("要评论文章不存在");
+        }
+        commentVo.setContent(commentVo.getContentString().getBytes("UTF-8"));
+        Comment insert = commentService.insert(commentVo);
         if (insert == null){
             return TTBFResultUtil.error("添加评论失败");
         }
@@ -56,7 +63,7 @@ public class CommentController {
      */
     @RequestMapping(value = "/getlist",method = RequestMethod.POST)
     public ResponseVO getList(@RequestParam("id") Long id,@RequestParam("page") Integer page,
-                              @RequestParam("rows") Integer rows) {
+                              @RequestParam("rows") Integer rows) throws UnsupportedEncodingException {
         PageBean pageBean = commentService.list(id, page, rows);
         return TTBFResultUtil.success("获取成功",pageBean);
     }

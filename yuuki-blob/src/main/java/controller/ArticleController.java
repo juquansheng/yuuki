@@ -31,12 +31,12 @@ public class ArticleController {
      */
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     public ResponseVO insert(@RequestBody ArticleVo articleVo) throws UnsupportedEncodingException {
-        Article article = new Article();
-        BeanUtils.copyProperties(articleVo,article);
+        /*Article article = new Article();
+        BeanUtils.copyProperties(articleVo,article);*/
         if (articleVo.getContentString() == null){
             return TTBFResultUtil.error("文章内容不能为空");
         }
-        article.setContent(articleVo.getContentString().getBytes("UTF-8"));
+        articleVo.setContent(articleVo.getContentString().getBytes("UTF-8"));
         String introduce;
         if (articleVo.getContentString().length() > 20){
             introduce = articleVo.getContentString().substring(0, 20);
@@ -50,19 +50,19 @@ public class ArticleController {
         //获取用户id
         Object principals = SecurityUtils.getSubject().getPrincipals();
         long id = Long.parseLong(principals.toString());
-        if (article.getId() == null){
-            Article inset = articleService.inset(article, introduce,id);
+        if (articleVo.getId() == null){
+            Article inset = articleService.inset(articleVo, introduce,id);
             if (inset == null){
                 return TTBFResultUtil.error("添加失败");
             }
             return TTBFResultUtil.success("发布成功",inset);
         }else {
             //获取文章作者id
-            Long userId = articleService.getDetail(article.getId()).getUserId();
+            Long userId = articleService.getDetail(articleVo.getId()).getUserId();
             if (userId != id){
                 return TTBFResultUtil.error("没有修改权限");
             }
-            Article update = articleService.update(article,introduce, id);
+            Article update = articleService.update(articleVo,introduce, id);
             if (update == null){
                 return TTBFResultUtil.error("修改失败");
             }

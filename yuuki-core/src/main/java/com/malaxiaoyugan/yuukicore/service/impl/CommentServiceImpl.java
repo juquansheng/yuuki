@@ -2,6 +2,7 @@ package com.malaxiaoyugan.yuukicore.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
 import com.malaxiaoyugan.yuukicore.entity.Comment;
 import com.malaxiaoyugan.yuukicore.entity.CommentExample;
 import com.malaxiaoyugan.yuukicore.entity.Reply;
@@ -9,10 +10,12 @@ import com.malaxiaoyugan.yuukicore.entity.ReplyExample;
 import com.malaxiaoyugan.yuukicore.mapper.CommentMapper;
 import com.malaxiaoyugan.yuukicore.mapper.ReplyMapper;
 import com.malaxiaoyugan.yuukicore.service.CommentService;
+import com.malaxiaoyugan.yuukicore.vo.CommentVo;
 import com.malaxiaoyugan.yuukicore.vo.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 
@@ -65,17 +68,24 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public PageBean list(Long id, int page, int rows) {
+    public PageBean list(Long id, int page, int rows) throws UnsupportedEncodingException {
         CommentExample commentExample = new CommentExample();
         commentExample.createCriteria().andStatusNotEqualTo(-1).andArticleIdEqualTo(id);
         if (page != 0 && rows != 0) {
             PageHelper.startPage(page, rows);
         }
         List<Comment> commentList = commentMapper.selectByExample(commentExample);
-        PageBean<Comment> pageBean = new PageBean<>();
+
+        List<CommentVo> commentVoList = Lists.newArrayList();
+        for (Comment comment:commentList){
+            CommentVo commentVo = new CommentVo();
+            commentVo.setContentString(new String(comment.getContent(),"UTF-8"));
+            commentVoList.add(commentVo);
+        }
+        PageBean<CommentVo> pageBean = new PageBean<>();
         PageInfo<Comment> pageInfo = new PageInfo<>(commentList);
         pageBean.setTotal(pageInfo.getTotal());
-        pageBean.setPageDatas(commentList);
+        pageBean.setPageDatas(commentVoList);
         return pageBean;
     }
 }

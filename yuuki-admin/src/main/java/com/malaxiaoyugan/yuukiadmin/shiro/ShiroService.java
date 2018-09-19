@@ -65,8 +65,12 @@ public class ShiroService {
         filterChainDefinitionMap.put("/profile/**", "restFilter,token");
         //文章修改和添加
         filterChainDefinitionMap.put("/article/edit", "restFilter,token");
-        //测试接口
+        //文章接口
         filterChainDefinitionMap.put("/article/**", "anon");
+        //评论接口
+        filterChainDefinitionMap.put("/comment/**", "anon");
+        //回复接口
+        filterChainDefinitionMap.put("/reply/**", "anon");
         // 加载数据库中配置的资源权限列表
        /* List<Resources> resourcesList = resourcesService.listUrlAndPermission();
         for (Resources resources : resourcesList) {

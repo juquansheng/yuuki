@@ -10,6 +10,7 @@ import com.malaxiaoyugan.yuukicore.utils.ListUtils;
 import com.malaxiaoyugan.yuukicore.utils.TTBFResultUtil;
 import com.malaxiaoyugan.yuukicore.vo.ArticleVo;
 import com.malaxiaoyugan.yuukicore.vo.PageBean;
+import com.malaxiaoyugan.yuukicore.vo.ReplyVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.BeanUtils;
@@ -27,12 +28,16 @@ public class ReplyController {
 
     /**
      * 添加回复
-     * @param reply
+     * @param replyVo
      * @return
      */
     @RequestMapping(value = "/insert",method = RequestMethod.POST)
-    public ResponseVO insert(@RequestBody Reply reply){
-        Reply insert = replyService.insert(reply);
+    public ResponseVO insert(@RequestBody ReplyVo replyVo) throws UnsupportedEncodingException {
+        if (replyVo.getCommentId() == null){
+            return TTBFResultUtil.error("要回复评论不存在");
+        }
+        replyVo.setContent(replyVo.getContentString().getBytes("UTF-8"));
+        Reply insert = replyService.insert(replyVo);
         if (insert == null){
             return TTBFResultUtil.error("添加回复失败");
         }
@@ -62,7 +67,7 @@ public class ReplyController {
      */
     @RequestMapping(value = "/getlist",method = RequestMethod.POST)
     public ResponseVO getList(@RequestParam("id") Long id,@RequestParam("page") Integer page,
-                              @RequestParam("rows") Integer rows) {
+                              @RequestParam("rows") Integer rows) throws UnsupportedEncodingException {
         PageBean pageBean = replyService.list(id, page, rows);
         return TTBFResultUtil.success("获取成功",pageBean);
     }

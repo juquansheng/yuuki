@@ -3,6 +3,7 @@ package com.malaxiaoyugan.yuukicore.service;
 import com.malaxiaoyugan.yuukicore.entity.Comment;
 import com.malaxiaoyugan.yuukicore.vo.PageBean;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public interface CommentService {
@@ -27,5 +28,5 @@ public interface CommentService {
      * @param rows
      * @return
      */
-    PageBean list(Long id, int page, int rows);
+    PageBean list(Long id, int page, int rows) throws UnsupportedEncodingException;
 }
