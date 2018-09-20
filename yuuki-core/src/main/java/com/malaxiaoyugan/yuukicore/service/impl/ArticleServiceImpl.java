@@ -1,5 +1,6 @@
 package com.malaxiaoyugan.yuukicore.service.impl;
 
+
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
@@ -82,7 +83,7 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleExample.Criteria criteria = articleExample.createCriteria();
         //选择条件
         if (article.getUserId() != null){
-            criteria.andUserIdEqualTo(article.getUserId());
+            //criteria.andUserIdEqualTo(article.getUserId());
         }
         articleExample.setOrderByClause("create_time desc");
         if (page != 0 && rows != 0) {
@@ -101,6 +102,9 @@ public class ArticleServiceImpl implements ArticleService {
         PageBean<ArticleVo> pageBean = new PageBean<>();
         PageInfo<Article> pageInfo = new PageInfo<>(articleList);
         pageBean.setTotal(pageInfo.getTotal());
+        pageBean.setTotalPages(pageInfo.getPageSize());
+        pageBean.setPageNumber(pageInfo.getPageNum());
+        pageBean.setPageSize(pageInfo.getSize());
         pageBean.setPageDatas(articleVoList);
         return pageBean;
     }

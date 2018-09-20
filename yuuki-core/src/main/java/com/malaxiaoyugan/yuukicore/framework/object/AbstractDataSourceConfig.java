@@ -1,3 +1,4 @@
+/*
 package com.malaxiaoyugan.yuukicore.framework.object;
 
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -6,6 +7,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
 
+*/
 /**
  * 添加数据源的抽象配置，详细实现根据业务定制。
  * Created by yadong.zhang on cn.com.innodev.health.framework.config
@@ -13,10 +15,12 @@ import javax.sql.DataSource;
  * <code>@Configuration</code><br>
  * <code>@MapperScan(basePackages = "xxMapper.java所在的包路径", sqlSessionTemplateRef  = "同下方transactionManagerBeanName")</code><br>
  *
- */
+ *//*
+
 public abstract class AbstractDataSourceConfig {
 
-    /**
+    */
+/**
      * 声明注入数据源<br>
      * 必备的注解参数<br>
      * <code>@Bean(name = "dataSourceBeanName") - 识别bean的唯一标识，应全局唯一</code><br>
@@ -24,10 +28,12 @@ public abstract class AbstractDataSourceConfig {
      * <code>@ConfigurationProperties(prefix = "xx.xx.xx")</code><br>
      *
      * @return
-     */
+     *//*
+
     public abstract DataSource injectDataSource();
 
-    /**
+    */
+/**
      * 声明注入SqlSessionFactory<br>
      * 必备的注解参数<br>
      * <code>@Bean(name = "sqlSessionFactoryBeanName") - 识别bean的唯一标识，应全局唯一</code>
@@ -38,10 +44,12 @@ public abstract class AbstractDataSourceConfig {
      * @param dataSource
      * @return
      * @throws Exception
-     */
+     *//*
+
     public abstract SqlSessionFactory injectSqlSessionFactory(DataSource dataSource) throws Exception;
 
-    /**
+    */
+/**
      * 声明注入事务管理DataSourceTransactionManager<br>
      * 必备的注解参数<br>
      * <code>@Bean(name = "transactionManagerBeanName") - 识别bean的唯一标识，应全局唯一</code>
@@ -51,10 +59,12 @@ public abstract class AbstractDataSourceConfig {
      *
      * @param dataSource
      * @return
-     */
+     *//*
+
     public abstract DataSourceTransactionManager injectTransactionManager(DataSource dataSource);
 
-    /**
+    */
+/**
      * 声明注入SqlSessionTemplate<br>
      * 必备的注解参数<br>
      * <code>@Bean(name = "sqlSessionTemplateBeanName") - 识别bean的唯一标识，应全局唯一</code>
@@ -65,6 +75,8 @@ public abstract class AbstractDataSourceConfig {
      * @param sqlSessionFactory
      * @return
      * @throws Exception
-     */
+     *//*
+
     public abstract SqlSessionTemplate injectSqlSessionTemplate(SqlSessionFactory sqlSessionFactory) throws Exception;
 }
+*/
