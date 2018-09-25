@@ -9,13 +9,16 @@ import com.malaxiaoyugan.yuukicore.entity.Reply;
 import com.malaxiaoyugan.yuukicore.entity.ReplyExample;
 import com.malaxiaoyugan.yuukicore.mapper.CommentMapper;
 import com.malaxiaoyugan.yuukicore.mapper.ReplyMapper;
+import com.malaxiaoyugan.yuukicore.mapper.UserMapper;
 import com.malaxiaoyugan.yuukicore.service.CommentService;
 import com.malaxiaoyugan.yuukicore.vo.CommentVo;
 import com.malaxiaoyugan.yuukicore.vo.PageBean;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -30,15 +33,24 @@ public class CommentServiceImpl implements CommentService {
     private CommentMapper commentMapper;
     @Autowired
     private ReplyMapper replyMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
-    public Comment insert(Comment comment) {
+    public CommentVo insert(Comment comment) {
+        String time12="yyyy-MM-dd hh:mm:ss";
+        String time24="yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(time24);
         Date date = new Date();
         comment.setCreateTime(date);
         comment.setUpdateTime(date);
         int insertSelective = commentMapper.insertSelective(comment);
         if (insertSelective > 0){
-            return comment;
+            CommentVo commentVo = new CommentVo();
+            BeanUtils.copyProperties(comment,commentVo);
+            commentVo.setNickName(userMapper.selectByPrimaryKey(comment.getUserId()).getNickName());
+            commentVo.setCreateTimeString(simpleDateFormat.format(comment.getCreateTime()));
+            return commentVo;
         }
         return null;
     }
@@ -69,17 +81,27 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public PageBean list(Long id, int page, int rows) throws UnsupportedEncodingException {
+        String time12="yyyy-MM-dd hh:mm:ss";
+        String time24="yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(time24);
         CommentExample commentExample = new CommentExample();
         commentExample.createCriteria().andStatusNotEqualTo(-1).andArticleIdEqualTo(id);
         if (page != 0 && rows != 0) {
             PageHelper.startPage(page, rows);
         }
-        List<Comment> commentList = commentMapper.selectByExample(commentExample);
+        commentExample.setOrderByClause("create_time desc");
+        List<Comment> commentList = commentMapper.selectByExampleWithBLOBs(commentExample);
 
         List<CommentVo> commentVoList = Lists.newArrayList();
         for (Comment comment:commentList){
             CommentVo commentVo = new CommentVo();
-            commentVo.setContentString(new String(comment.getContent(),"UTF-8"));
+            if (comment.getContent() == null){
+                commentVo.setContentString("");
+            }else {
+                commentVo.setContentString(new String(comment.getContent(),"UTF-8"));
+            }
+            commentVo.setNickName(userMapper.selectByPrimaryKey(comment.getUserId()).getNickName());
+            commentVo.setCreateTimeString(simpleDateFormat.format(comment.getCreateTime()));
             commentVoList.add(commentVo);
         }
         PageBean<CommentVo> pageBean = new PageBean<>();

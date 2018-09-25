@@ -66,9 +66,13 @@ public class ShiroService {
         //文章修改和添加
         filterChainDefinitionMap.put("/article/edit", "restFilter,token");
         //文章接口
-        filterChainDefinitionMap.put("/article/**", "anon");
+        filterChainDefinitionMap.put("/article/getdetail", "anon");
+        filterChainDefinitionMap.put("/article/getlist", "anon");
+        filterChainDefinitionMap.put("/article/isbelong", "anon");
         //评论接口
-        filterChainDefinitionMap.put("/comment/**", "anon");
+        filterChainDefinitionMap.put("/comment/insert", "restFilter,token");
+        filterChainDefinitionMap.put("/comment/delete", "restFilter,token");
+        filterChainDefinitionMap.put("/comment/getlist", "anon");
         //回复接口
         filterChainDefinitionMap.put("/reply/**", "anon");
         // 加载数据库中配置的资源权限列表

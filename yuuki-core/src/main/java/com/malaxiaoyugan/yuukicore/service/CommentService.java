@@ -1,6 +1,7 @@
 package com.malaxiaoyugan.yuukicore.service;
 
 import com.malaxiaoyugan.yuukicore.entity.Comment;
+import com.malaxiaoyugan.yuukicore.vo.CommentVo;
 import com.malaxiaoyugan.yuukicore.vo.PageBean;
 
 import java.io.UnsupportedEncodingException;
@@ -13,7 +14,7 @@ public interface CommentService {
      * @param comment
      * @return
      */
-    Comment insert(Comment comment);
+    CommentVo insert(Comment comment);
 
     /**
      * 删除评论
