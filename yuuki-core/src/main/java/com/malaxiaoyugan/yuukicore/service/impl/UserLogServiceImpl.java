@@ -10,10 +10,12 @@ import com.malaxiaoyugan.yuukicore.service.UserLogService;
 import com.malaxiaoyugan.yuukicore.vo.ArticleVo;
 import com.malaxiaoyugan.yuukicore.vo.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 
+@Service
 public class UserLogServiceImpl implements UserLogService {
     @Autowired
     private UserLogMapper userLogMapper;
