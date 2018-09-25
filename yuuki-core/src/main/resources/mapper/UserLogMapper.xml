@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.malaxiaoyugan.yuukicore.mapper.LogMapper" >
-  <resultMap id="BaseResultMap" type="com.malaxiaoyugan.yuukicore.entity.Log" >
+<mapper namespace="com.malaxiaoyugan.yuukicore.mapper.UserLogMapper" >
+  <resultMap id="BaseResultMap" type="com.malaxiaoyugan.yuukicore.entity.UserLog" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="op_type" property="opType" jdbcType="INTEGER" />
     <result column="content" property="content" jdbcType="VARCHAR" />
-    <result column="article_id" property="articleId" jdbcType="BIGINT" />
+    <result column="main_id" property="mainId" jdbcType="BIGINT" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -68,15 +68,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, op_type, content, article_id, user_id, create_time
+    id, op_type, content, main_id, user_id, create_time
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.malaxiaoyugan.yuukicore.entity.LogExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.malaxiaoyugan.yuukicore.entity.UserLogExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from log
+    from user_log
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,33 +87,33 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from log
+    from user_log
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from log
+    delete from user_log
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.malaxiaoyugan.yuukicore.entity.LogExample" >
-    delete from log
+  <delete id="deleteByExample" parameterType="com.malaxiaoyugan.yuukicore.entity.UserLogExample" >
+    delete from user_log
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.malaxiaoyugan.yuukicore.entity.Log" >
+  <insert id="insert" parameterType="com.malaxiaoyugan.yuukicore.entity.UserLog" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into log (op_type, content, article_id, 
+    insert into user_log (op_type, content, main_id, 
       user_id, create_time)
-    values (#{opType,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{articleId,jdbcType=BIGINT}, 
+    values (#{opType,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{mainId,jdbcType=BIGINT}, 
       #{userId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.malaxiaoyugan.yuukicore.entity.Log" >
+  <insert id="insertSelective" parameterType="com.malaxiaoyugan.yuukicore.entity.UserLog" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into log
+    insert into user_log
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="opType != null" >
         op_type,
@@ -121,8 +121,8 @@
       <if test="content != null" >
         content,
       </if>
-      <if test="articleId != null" >
-        article_id,
+      <if test="mainId != null" >
+        main_id,
       </if>
       <if test="userId != null" >
         user_id,
@@ -138,8 +138,8 @@
       <if test="content != null" >
         #{content,jdbcType=VARCHAR},
       </if>
-      <if test="articleId != null" >
-        #{articleId,jdbcType=BIGINT},
+      <if test="mainId != null" >
+        #{mainId,jdbcType=BIGINT},
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=BIGINT},
@@ -149,14 +149,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.malaxiaoyugan.yuukicore.entity.LogExample" resultType="java.lang.Integer" >
-    select count(*) from log
+  <select id="countByExample" parameterType="com.malaxiaoyugan.yuukicore.entity.UserLogExample" resultType="java.lang.Integer" >
+    select count(*) from user_log
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update log
+    update user_log
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
@@ -167,8 +167,8 @@
       <if test="record.content != null" >
         content = #{record.content,jdbcType=VARCHAR},
       </if>
-      <if test="record.articleId != null" >
-        article_id = #{record.articleId,jdbcType=BIGINT},
+      <if test="record.mainId != null" >
+        main_id = #{record.mainId,jdbcType=BIGINT},
       </if>
       <if test="record.userId != null" >
         user_id = #{record.userId,jdbcType=BIGINT},
@@ -182,19 +182,19 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update log
+    update user_log
     set id = #{record.id,jdbcType=BIGINT},
       op_type = #{record.opType,jdbcType=INTEGER},
       content = #{record.content,jdbcType=VARCHAR},
-      article_id = #{record.articleId,jdbcType=BIGINT},
+      main_id = #{record.mainId,jdbcType=BIGINT},
       user_id = #{record.userId,jdbcType=BIGINT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.malaxiaoyugan.yuukicore.entity.Log" >
-    update log
+  <update id="updateByPrimaryKeySelective" parameterType="com.malaxiaoyugan.yuukicore.entity.UserLog" >
+    update user_log
     <set >
       <if test="opType != null" >
         op_type = #{opType,jdbcType=INTEGER},
@@ -202,8 +202,8 @@
       <if test="content != null" >
         content = #{content,jdbcType=VARCHAR},
       </if>
-      <if test="articleId != null" >
-        article_id = #{articleId,jdbcType=BIGINT},
+      <if test="mainId != null" >
+        main_id = #{mainId,jdbcType=BIGINT},
       </if>
       <if test="userId != null" >
         user_id = #{userId,jdbcType=BIGINT},
@@ -214,11 +214,11 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.malaxiaoyugan.yuukicore.entity.Log" >
-    update log
+  <update id="updateByPrimaryKey" parameterType="com.malaxiaoyugan.yuukicore.entity.UserLog" >
+    update user_log
     set op_type = #{opType,jdbcType=INTEGER},
       content = #{content,jdbcType=VARCHAR},
-      article_id = #{articleId,jdbcType=BIGINT},
+      main_id = #{mainId,jdbcType=BIGINT},
       user_id = #{userId,jdbcType=BIGINT},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

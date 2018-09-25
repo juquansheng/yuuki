@@ -7,9 +7,12 @@ import com.google.common.collect.Lists;
 import com.malaxiaoyugan.yuukicore.entity.Article;
 import com.malaxiaoyugan.yuukicore.entity.ArticleExample;
 import com.malaxiaoyugan.yuukicore.entity.User;
+import com.malaxiaoyugan.yuukicore.entity.UserLog;
 import com.malaxiaoyugan.yuukicore.mapper.ArticleMapper;
+import com.malaxiaoyugan.yuukicore.mapper.UserLogMapper;
 import com.malaxiaoyugan.yuukicore.mapper.UserMapper;
 import com.malaxiaoyugan.yuukicore.service.ArticleService;
+import com.malaxiaoyugan.yuukicore.service.UserLogService;
 import com.malaxiaoyugan.yuukicore.vo.ArticleVo;
 import com.malaxiaoyugan.yuukicore.vo.PageBean;
 import lombok.extern.slf4j.Slf4j;
@@ -29,19 +32,26 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleMapper articleMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private UserLogService userLogService;
 
 
 
     @Override
     public Article update(Article article,String introduce, Long userId) {
+        String time12="yyyy-MM-dd hh:mm:ss";
+        String time24="yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(time24);
         if (article.getId() == null){
             log.error("文章不存在");
             return null;
         }
         article.setIntroduce(introduce);
-        article.setUpdateTime(new Date());
+        Date date = new Date();
+        article.setUpdateTime(date);
         int updateByPrimaryKeyWithBLOBs = articleMapper.updateByPrimaryKeySelective(article);
         if (updateByPrimaryKeyWithBLOBs >0){
+            userLogService.insert(article.getTitle(),4,article.getUserId(),article.getId(),simpleDateFormat.format(date));
             return article;
         }else {
             return null;
@@ -50,12 +60,17 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Article inset(Article article,String introduce,Long userId) {
+        String time12="yyyy-MM-dd hh:mm:ss";
+        String time24="yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(time24);
+        Date date = new Date();
         article.setUserId(userId);
         article.setIntroduce(introduce);
-        article.setCreateTime(new Date());
-        article.setUpdateTime(new Date());
+        article.setCreateTime(date);
+        article.setUpdateTime(date);
         int insertSelective = articleMapper.insertSelective(article);
         if (insertSelective > 0){
+            userLogService.insert(article.getTitle(),0,article.getUserId(),article.getId(),simpleDateFormat.format(date));
             return article;
         }
         return null;
@@ -119,12 +134,16 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public boolean deleteArticle(Long id) {
+        String time12="yyyy-MM-dd hh:mm:ss";
+        String time24="yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(time24);
         Article article = new Article();
         article.setId(id);
         article.setStatus(-1);
         article.setUpdateTime(new Date());
         int i = articleMapper.updateByPrimaryKeySelective(article);
         if (i > 0){
+            userLogService.insert(article.getTitle(),5,article.getUserId(),article.getId(),simpleDateFormat.format(new Date()));
             return true;
         }else {
             return false;

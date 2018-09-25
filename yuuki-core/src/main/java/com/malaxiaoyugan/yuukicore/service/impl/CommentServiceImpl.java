@@ -7,10 +7,12 @@ import com.malaxiaoyugan.yuukicore.entity.Comment;
 import com.malaxiaoyugan.yuukicore.entity.CommentExample;
 import com.malaxiaoyugan.yuukicore.entity.Reply;
 import com.malaxiaoyugan.yuukicore.entity.ReplyExample;
+import com.malaxiaoyugan.yuukicore.mapper.ArticleMapper;
 import com.malaxiaoyugan.yuukicore.mapper.CommentMapper;
 import com.malaxiaoyugan.yuukicore.mapper.ReplyMapper;
 import com.malaxiaoyugan.yuukicore.mapper.UserMapper;
 import com.malaxiaoyugan.yuukicore.service.CommentService;
+import com.malaxiaoyugan.yuukicore.service.UserLogService;
 import com.malaxiaoyugan.yuukicore.vo.CommentVo;
 import com.malaxiaoyugan.yuukicore.vo.PageBean;
 import org.springframework.beans.BeanUtils;
@@ -35,6 +37,10 @@ public class CommentServiceImpl implements CommentService {
     private ReplyMapper replyMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private ArticleMapper articleMapper;
+    @Autowired
+    private UserLogService userLogService;
 
     @Override
     public CommentVo insert(Comment comment) {
@@ -46,6 +52,10 @@ public class CommentServiceImpl implements CommentService {
         comment.setUpdateTime(date);
         int insertSelective = commentMapper.insertSelective(comment);
         if (insertSelective > 0){
+            //添加记录
+            userLogService.insert(articleMapper.selectByPrimaryKey(comment.getArticleId()).getTitle(),1,
+                    comment.getUserId(),comment.getArticleId(),simpleDateFormat.format(comment.getCreateTime()));
+
             CommentVo commentVo = new CommentVo();
             BeanUtils.copyProperties(comment,commentVo);
             commentVo.setNickName(userMapper.selectByPrimaryKey(comment.getUserId()).getNickName());
@@ -57,6 +67,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public boolean delete(Long id) {
+        String time12="yyyy-MM-dd hh:mm:ss";
+        String time24="yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(time24);
         Date date = new Date();
         Comment comment = new Comment();
         comment.setStatus(-1);
@@ -74,6 +87,9 @@ public class CommentServiceImpl implements CommentService {
             replyMapper.updateByPrimaryKey(delReply);
         }
         if (insertSelective > 0){
+            //添加记录
+            userLogService.insert(articleMapper.selectByPrimaryKey(comment.getArticleId()).getTitle(),6,
+                    comment.getUserId(),comment.getArticleId(),simpleDateFormat.format(date));
             return true;
         }
         return false;

@@ -2,14 +2,14 @@ package com.malaxiaoyugan.yuukicore.entity;
 
 import java.util.Date;
 
-public class Log {
+public class UserLog {
     private Long id;
 
     private Integer opType;
 
     private String content;
 
-    private Long articleId;
+    private Long mainId;
 
     private Long userId;
 
@@ -39,12 +39,12 @@ public class Log {
         this.content = content == null ? null : content.trim();
     }
 
-    public Long getArticleId() {
-        return articleId;
+    public Long getMainId() {
+        return mainId;
     }
 
-    public void setArticleId(Long articleId) {
-        this.articleId = articleId;
+    public void setMainId(Long mainId) {
+        this.mainId = mainId;
     }
 
     public Long getUserId() {

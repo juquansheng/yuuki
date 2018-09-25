@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class LogExample {
+public class UserLogExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public LogExample() {
+    public UserLogExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -295,63 +295,63 @@ public class LogExample {
             return (Criteria) this;
         }
 
-        public Criteria andArticleIdIsNull() {
-            addCriterion("article_id is null");
+        public Criteria andMainIdIsNull() {
+            addCriterion("main_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andArticleIdIsNotNull() {
-            addCriterion("article_id is not null");
+        public Criteria andMainIdIsNotNull() {
+            addCriterion("main_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andArticleIdEqualTo(Long value) {
-            addCriterion("article_id =", value, "articleId");
+        public Criteria andMainIdEqualTo(Long value) {
+            addCriterion("main_id =", value, "mainId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleIdNotEqualTo(Long value) {
-            addCriterion("article_id <>", value, "articleId");
+        public Criteria andMainIdNotEqualTo(Long value) {
+            addCriterion("main_id <>", value, "mainId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleIdGreaterThan(Long value) {
-            addCriterion("article_id >", value, "articleId");
+        public Criteria andMainIdGreaterThan(Long value) {
+            addCriterion("main_id >", value, "mainId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("article_id >=", value, "articleId");
+        public Criteria andMainIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("main_id >=", value, "mainId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleIdLessThan(Long value) {
-            addCriterion("article_id <", value, "articleId");
+        public Criteria andMainIdLessThan(Long value) {
+            addCriterion("main_id <", value, "mainId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleIdLessThanOrEqualTo(Long value) {
-            addCriterion("article_id <=", value, "articleId");
+        public Criteria andMainIdLessThanOrEqualTo(Long value) {
+            addCriterion("main_id <=", value, "mainId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleIdIn(List<Long> values) {
-            addCriterion("article_id in", values, "articleId");
+        public Criteria andMainIdIn(List<Long> values) {
+            addCriterion("main_id in", values, "mainId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleIdNotIn(List<Long> values) {
-            addCriterion("article_id not in", values, "articleId");
+        public Criteria andMainIdNotIn(List<Long> values) {
+            addCriterion("main_id not in", values, "mainId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleIdBetween(Long value1, Long value2) {
-            addCriterion("article_id between", value1, value2, "articleId");
+        public Criteria andMainIdBetween(Long value1, Long value2) {
+            addCriterion("main_id between", value1, value2, "mainId");
             return (Criteria) this;
         }
 
-        public Criteria andArticleIdNotBetween(Long value1, Long value2) {
-            addCriterion("article_id not between", value1, value2, "articleId");
+        public Criteria andMainIdNotBetween(Long value1, Long value2) {
+            addCriterion("main_id not between", value1, value2, "mainId");
             return (Criteria) this;
         }
 
