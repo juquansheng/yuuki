@@ -5,13 +5,15 @@ import java.util.Date;
 public class Message {
     private Long id;
 
-    private Long from;
+    private Long userFrom;
 
-    private Long to;
+    private Long userTo;
 
     private Integer type;
 
     private Integer status;
+
+    private Long mainId;
 
     private String content;
 
@@ -27,20 +29,20 @@ public class Message {
         this.id = id;
     }
 
-    public Long getFrom() {
-        return from;
+    public Long getUserFrom() {
+        return userFrom;
     }
 
-    public void setFrom(Long from) {
-        this.from = from;
+    public void setUserFrom(Long userFrom) {
+        this.userFrom = userFrom;
     }
 
-    public Long getTo() {
-        return to;
+    public Long getUserTo() {
+        return userTo;
     }
 
-    public void setTo(Long to) {
-        this.to = to;
+    public void setUserTo(Long userTo) {
+        this.userTo = userTo;
     }
 
     public Integer getType() {
@@ -57,6 +59,14 @@ public class Message {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Long getMainId() {
+        return mainId;
+    }
+
+    public void setMainId(Long mainId) {
+        this.mainId = mainId;
     }
 
     public String getContent() {

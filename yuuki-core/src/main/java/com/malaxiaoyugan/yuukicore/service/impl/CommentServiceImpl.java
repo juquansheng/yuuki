@@ -3,21 +3,20 @@ package com.malaxiaoyugan.yuukicore.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
-import com.malaxiaoyugan.yuukicore.entity.Comment;
-import com.malaxiaoyugan.yuukicore.entity.CommentExample;
-import com.malaxiaoyugan.yuukicore.entity.Reply;
-import com.malaxiaoyugan.yuukicore.entity.ReplyExample;
+import com.malaxiaoyugan.yuukicore.entity.*;
 import com.malaxiaoyugan.yuukicore.mapper.ArticleMapper;
 import com.malaxiaoyugan.yuukicore.mapper.CommentMapper;
 import com.malaxiaoyugan.yuukicore.mapper.ReplyMapper;
 import com.malaxiaoyugan.yuukicore.mapper.UserMapper;
 import com.malaxiaoyugan.yuukicore.service.CommentService;
+import com.malaxiaoyugan.yuukicore.service.MessageService;
 import com.malaxiaoyugan.yuukicore.service.UserLogService;
 import com.malaxiaoyugan.yuukicore.vo.CommentVo;
 import com.malaxiaoyugan.yuukicore.vo.PageBean;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.misc.resources.Messages;
 
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
@@ -41,6 +40,8 @@ public class CommentServiceImpl implements CommentService {
     private ArticleMapper articleMapper;
     @Autowired
     private UserLogService userLogService;
+    @Autowired
+    private MessageService messageService;
 
     @Override
     public CommentVo insert(Comment comment) {
@@ -55,6 +56,16 @@ public class CommentServiceImpl implements CommentService {
             //添加记录
             userLogService.insert(articleMapper.selectByPrimaryKey(comment.getArticleId()).getTitle(),1,
                     comment.getUserId(),comment.getArticleId(),simpleDateFormat.format(comment.getCreateTime()));
+
+            //消息推送
+            Message message = new Message();
+            message.setUserTo(articleMapper.selectByPrimaryKey(comment.getArticleId()).getUserId());
+            message.setUserFrom(comment.getUserId());
+            message.setContent(userMapper.selectByPrimaryKey(comment.getUserId()).getNickName()+"评论了您的文章《"+articleMapper.selectByPrimaryKey(comment.getArticleId()).getTitle()+"》");
+            message.setType(0);
+            message.setCreatetime(date);
+            message.setUpdatetime(date);
+            messageService.insert(message);
 
             CommentVo commentVo = new CommentVo();
             BeanUtils.copyProperties(comment,commentVo);

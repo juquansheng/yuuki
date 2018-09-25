@@ -3,10 +3,11 @@
 <mapper namespace="com.malaxiaoyugan.yuukicore.mapper.MessageMapper" >
   <resultMap id="BaseResultMap" type="com.malaxiaoyugan.yuukicore.entity.Message" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="from" property="from" jdbcType="BIGINT" />
-    <result column="to" property="to" jdbcType="BIGINT" />
+    <result column="user_from" property="userFrom" jdbcType="BIGINT" />
+    <result column="user_to" property="userTo" jdbcType="BIGINT" />
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="main_id" property="mainId" jdbcType="BIGINT" />
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, from, to, type, status, content, createTime, updateTime
+    id, user_from, user_to, type, status, main_id, content, createTime, updateTime
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.malaxiaoyugan.yuukicore.entity.MessageExample" >
     select
@@ -106,12 +107,12 @@
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into message (from, to, type, 
-      status, content, createTime, 
-      updateTime)
-    values (#{from,jdbcType=BIGINT}, #{to,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, 
-      #{status,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
-      #{updatetime,jdbcType=TIMESTAMP})
+    insert into message (user_from, user_to, type, 
+      status, main_id, content, 
+      createTime, updateTime)
+    values (#{userFrom,jdbcType=BIGINT}, #{userTo,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{mainId,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.malaxiaoyugan.yuukicore.entity.Message" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
@@ -119,17 +120,20 @@
     </selectKey>
     insert into message
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="from != null" >
-        from,
+      <if test="userFrom != null" >
+        user_from,
       </if>
-      <if test="to != null" >
-        to,
+      <if test="userTo != null" >
+        user_to,
       </if>
       <if test="type != null" >
         type,
       </if>
       <if test="status != null" >
         status,
+      </if>
+      <if test="mainId != null" >
+        main_id,
       </if>
       <if test="content != null" >
         content,
@@ -142,17 +146,20 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="from != null" >
-        #{from,jdbcType=BIGINT},
+      <if test="userFrom != null" >
+        #{userFrom,jdbcType=BIGINT},
       </if>
-      <if test="to != null" >
-        #{to,jdbcType=BIGINT},
+      <if test="userTo != null" >
+        #{userTo,jdbcType=BIGINT},
       </if>
       <if test="type != null" >
         #{type,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="mainId != null" >
+        #{mainId,jdbcType=BIGINT},
       </if>
       <if test="content != null" >
         #{content,jdbcType=VARCHAR},
@@ -177,17 +184,20 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.from != null" >
-        from = #{record.from,jdbcType=BIGINT},
+      <if test="record.userFrom != null" >
+        user_from = #{record.userFrom,jdbcType=BIGINT},
       </if>
-      <if test="record.to != null" >
-        to = #{record.to,jdbcType=BIGINT},
+      <if test="record.userTo != null" >
+        user_to = #{record.userTo,jdbcType=BIGINT},
       </if>
       <if test="record.type != null" >
         type = #{record.type,jdbcType=INTEGER},
       </if>
       <if test="record.status != null" >
         status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.mainId != null" >
+        main_id = #{record.mainId,jdbcType=BIGINT},
       </if>
       <if test="record.content != null" >
         content = #{record.content,jdbcType=VARCHAR},
@@ -206,10 +216,11 @@
   <update id="updateByExample" parameterType="map" >
     update message
     set id = #{record.id,jdbcType=BIGINT},
-      from = #{record.from,jdbcType=BIGINT},
-      to = #{record.to,jdbcType=BIGINT},
+      user_from = #{record.userFrom,jdbcType=BIGINT},
+      user_to = #{record.userTo,jdbcType=BIGINT},
       type = #{record.type,jdbcType=INTEGER},
       status = #{record.status,jdbcType=INTEGER},
+      main_id = #{record.mainId,jdbcType=BIGINT},
       content = #{record.content,jdbcType=VARCHAR},
       createTime = #{record.createtime,jdbcType=TIMESTAMP},
       updateTime = #{record.updatetime,jdbcType=TIMESTAMP}
@@ -220,17 +231,20 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.malaxiaoyugan.yuukicore.entity.Message" >
     update message
     <set >
-      <if test="from != null" >
-        from = #{from,jdbcType=BIGINT},
+      <if test="userFrom != null" >
+        user_from = #{userFrom,jdbcType=BIGINT},
       </if>
-      <if test="to != null" >
-        to = #{to,jdbcType=BIGINT},
+      <if test="userTo != null" >
+        user_to = #{userTo,jdbcType=BIGINT},
       </if>
       <if test="type != null" >
         type = #{type,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="mainId != null" >
+        main_id = #{mainId,jdbcType=BIGINT},
       </if>
       <if test="content != null" >
         content = #{content,jdbcType=VARCHAR},
@@ -246,10 +260,11 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.malaxiaoyugan.yuukicore.entity.Message" >
     update message
-    set from = #{from,jdbcType=BIGINT},
-      to = #{to,jdbcType=BIGINT},
+    set user_from = #{userFrom,jdbcType=BIGINT},
+      user_to = #{userTo,jdbcType=BIGINT},
       type = #{type,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
+      main_id = #{mainId,jdbcType=BIGINT},
       content = #{content,jdbcType=VARCHAR},
       createTime = #{createtime,jdbcType=TIMESTAMP},
       updateTime = #{updatetime,jdbcType=TIMESTAMP}
