@@ -102,7 +102,7 @@ public class ArticleServiceImpl implements ArticleService {
         PageBean<ArticleVo> pageBean = new PageBean<>();
         PageInfo<Article> pageInfo = new PageInfo<>(articleList);
         pageBean.setTotal(pageInfo.getTotal());
-        pageBean.setTotalPages(pageInfo.getPageSize());
+        pageBean.setTotalPages(pageInfo.getPages());
         pageBean.setPageNumber(pageInfo.getPageNum());
         pageBean.setPageSize(pageInfo.getSize());
         pageBean.setPageDatas(articleVoList);

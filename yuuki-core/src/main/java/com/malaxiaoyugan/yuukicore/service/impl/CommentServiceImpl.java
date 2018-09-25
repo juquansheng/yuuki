@@ -85,7 +85,7 @@ public class CommentServiceImpl implements CommentService {
         PageBean<CommentVo> pageBean = new PageBean<>();
         PageInfo<Comment> pageInfo = new PageInfo<>(commentList);
         pageBean.setTotal(pageInfo.getTotal());
-        pageBean.setTotalPages(pageInfo.getPageSize());
+        pageBean.setTotalPages(pageInfo.getPages());
         pageBean.setPageNumber(pageInfo.getPageNum());
         pageBean.setPageSize(pageInfo.getSize());
         pageBean.setPageDatas(commentVoList);

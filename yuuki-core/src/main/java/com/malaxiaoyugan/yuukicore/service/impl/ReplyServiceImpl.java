@@ -72,7 +72,7 @@ public class ReplyServiceImpl implements ReplyService {
         PageBean<ReplyVo> pageBean = new PageBean<>();
         PageInfo<Reply> pageInfo = new PageInfo<>(replyList);
         pageBean.setTotal(pageInfo.getTotal());
-        pageBean.setTotalPages(pageInfo.getPageSize());
+        pageBean.setTotalPages(pageInfo.getPages());
         pageBean.setPageNumber(pageInfo.getPageNum());
         pageBean.setPageSize(pageInfo.getSize());
         pageBean.setPageDatas(commentVoList);
