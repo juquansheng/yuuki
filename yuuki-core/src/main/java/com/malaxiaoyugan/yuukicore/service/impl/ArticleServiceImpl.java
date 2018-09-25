@@ -63,8 +63,16 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleVo getDetail(Long id) throws UnsupportedEncodingException {
+
         ArticleVo articleVo = new ArticleVo();
         Article article = articleMapper.selectByPrimaryKey(id);
+
+        //增加浏览次数
+        Article articleUpdate = new Article();
+        articleUpdate.setId(id);
+        articleUpdate.setBrowseTimes(article.getBrowseTimes() + 1);
+        articleMapper.updateByPrimaryKeySelective(articleUpdate);
+
         BeanUtils.copyProperties(article,articleVo);
         articleVo.setContentString(new String(article.getContent(),"UTF-8"));
         User user = userMapper.selectByPrimaryKey(article.getUserId());

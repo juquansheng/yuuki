@@ -295,6 +295,66 @@ public class LogExample {
             return (Criteria) this;
         }
 
+        public Criteria andArticleIdIsNull() {
+            addCriterion("article_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdIsNotNull() {
+            addCriterion("article_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdEqualTo(Long value) {
+            addCriterion("article_id =", value, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdNotEqualTo(Long value) {
+            addCriterion("article_id <>", value, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdGreaterThan(Long value) {
+            addCriterion("article_id >", value, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("article_id >=", value, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdLessThan(Long value) {
+            addCriterion("article_id <", value, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdLessThanOrEqualTo(Long value) {
+            addCriterion("article_id <=", value, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdIn(List<Long> values) {
+            addCriterion("article_id in", values, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdNotIn(List<Long> values) {
+            addCriterion("article_id not in", values, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdBetween(Long value1, Long value2) {
+            addCriterion("article_id between", value1, value2, "articleId");
+            return (Criteria) this;
+        }
+
+        public Criteria andArticleIdNotBetween(Long value1, Long value2) {
+            addCriterion("article_id not between", value1, value2, "articleId");
+            return (Criteria) this;
+        }
+
         public Criteria andUserIdIsNull() {
             addCriterion("user_id is null");
             return (Criteria) this;

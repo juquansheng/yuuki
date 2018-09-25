@@ -70,7 +70,12 @@
            enableSelectByExample="true"/>
     <table tableName="user_right" domainObjectName="UserRight" enableCountByExample="true"
            enableSelectByExample="true"/>-->
-    <table tableName="reply" domainObjectName="Reply" enableCountByExample="true"
+    <table tableName="log" domainObjectName="Log" enableCountByExample="true"
+           enableSelectByExample="true">
+      <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+    </table>
+
+    <table tableName="message" domainObjectName="Message" enableCountByExample="true"
            enableSelectByExample="true">
       <generatedKey column="id" sqlStatement="MySql" identity="true"/>
     </table>

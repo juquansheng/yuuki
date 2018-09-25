@@ -9,6 +9,8 @@ public class Log {
 
     private String content;
 
+    private Long articleId;
+
     private Long userId;
 
     private Date createTime;
@@ -35,6 +37,14 @@ public class Log {
 
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
+    }
+
+    public Long getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(Long articleId) {
+        this.articleId = articleId;
     }
 
     public Long getUserId() {

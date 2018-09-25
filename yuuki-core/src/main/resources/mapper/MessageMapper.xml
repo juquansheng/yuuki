@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.malaxiaoyugan.yuukicore.mapper.LogMapper" >
-  <resultMap id="BaseResultMap" type="com.malaxiaoyugan.yuukicore.entity.Log" >
+<mapper namespace="com.malaxiaoyugan.yuukicore.mapper.MessageMapper" >
+  <resultMap id="BaseResultMap" type="com.malaxiaoyugan.yuukicore.entity.Message" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="op_type" property="opType" jdbcType="INTEGER" />
+    <result column="from" property="from" jdbcType="BIGINT" />
+    <result column="to" property="to" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
     <result column="content" property="content" jdbcType="VARCHAR" />
-    <result column="article_id" property="articleId" jdbcType="BIGINT" />
-    <result column="user_id" property="userId" jdbcType="BIGINT" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -68,15 +70,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, op_type, content, article_id, user_id, create_time
+    id, from, to, type, status, content, createTime, updateTime
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.malaxiaoyugan.yuukicore.entity.LogExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.malaxiaoyugan.yuukicore.entity.MessageExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from log
+    from message
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,94 +89,114 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from log
+    from message
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from log
+    delete from message
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.malaxiaoyugan.yuukicore.entity.LogExample" >
-    delete from log
+  <delete id="deleteByExample" parameterType="com.malaxiaoyugan.yuukicore.entity.MessageExample" >
+    delete from message
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.malaxiaoyugan.yuukicore.entity.Log" >
+  <insert id="insert" parameterType="com.malaxiaoyugan.yuukicore.entity.Message" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into log (op_type, content, article_id, 
-      user_id, create_time)
-    values (#{opType,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{articleId,jdbcType=BIGINT}, 
-      #{userId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP})
+    insert into message (from, to, type, 
+      status, content, createTime, 
+      updateTime)
+    values (#{from,jdbcType=BIGINT}, #{to,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.malaxiaoyugan.yuukicore.entity.Log" >
+  <insert id="insertSelective" parameterType="com.malaxiaoyugan.yuukicore.entity.Message" >
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into log
+    insert into message
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="opType != null" >
-        op_type,
+      <if test="from != null" >
+        from,
+      </if>
+      <if test="to != null" >
+        to,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="status != null" >
+        status,
       </if>
       <if test="content != null" >
         content,
       </if>
-      <if test="articleId != null" >
-        article_id,
+      <if test="createtime != null" >
+        createTime,
       </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="createTime != null" >
-        create_time,
+      <if test="updatetime != null" >
+        updateTime,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="opType != null" >
-        #{opType,jdbcType=INTEGER},
+      <if test="from != null" >
+        #{from,jdbcType=BIGINT},
+      </if>
+      <if test="to != null" >
+        #{to,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="content != null" >
         #{content,jdbcType=VARCHAR},
       </if>
-      <if test="articleId != null" >
-        #{articleId,jdbcType=BIGINT},
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.malaxiaoyugan.yuukicore.entity.LogExample" resultType="java.lang.Integer" >
-    select count(*) from log
+  <select id="countByExample" parameterType="com.malaxiaoyugan.yuukicore.entity.MessageExample" resultType="java.lang.Integer" >
+    select count(*) from message
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update log
+    update message
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.opType != null" >
-        op_type = #{record.opType,jdbcType=INTEGER},
+      <if test="record.from != null" >
+        from = #{record.from,jdbcType=BIGINT},
+      </if>
+      <if test="record.to != null" >
+        to = #{record.to,jdbcType=BIGINT},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
       </if>
       <if test="record.content != null" >
         content = #{record.content,jdbcType=VARCHAR},
       </if>
-      <if test="record.articleId != null" >
-        article_id = #{record.articleId,jdbcType=BIGINT},
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.userId != null" >
-        user_id = #{record.userId,jdbcType=BIGINT},
-      </if>
-      <if test="record.createTime != null" >
-        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      <if test="record.updatetime != null" >
+        updateTime = #{record.updatetime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -182,45 +204,55 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update log
+    update message
     set id = #{record.id,jdbcType=BIGINT},
-      op_type = #{record.opType,jdbcType=INTEGER},
+      from = #{record.from,jdbcType=BIGINT},
+      to = #{record.to,jdbcType=BIGINT},
+      type = #{record.type,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
       content = #{record.content,jdbcType=VARCHAR},
-      article_id = #{record.articleId,jdbcType=BIGINT},
-      user_id = #{record.userId,jdbcType=BIGINT},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      updateTime = #{record.updatetime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.malaxiaoyugan.yuukicore.entity.Log" >
-    update log
+  <update id="updateByPrimaryKeySelective" parameterType="com.malaxiaoyugan.yuukicore.entity.Message" >
+    update message
     <set >
-      <if test="opType != null" >
-        op_type = #{opType,jdbcType=INTEGER},
+      <if test="from != null" >
+        from = #{from,jdbcType=BIGINT},
+      </if>
+      <if test="to != null" >
+        to = #{to,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
       </if>
       <if test="content != null" >
         content = #{content,jdbcType=VARCHAR},
       </if>
-      <if test="articleId != null" >
-        article_id = #{articleId,jdbcType=BIGINT},
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
+      <if test="updatetime != null" >
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.malaxiaoyugan.yuukicore.entity.Log" >
-    update log
-    set op_type = #{opType,jdbcType=INTEGER},
+  <update id="updateByPrimaryKey" parameterType="com.malaxiaoyugan.yuukicore.entity.Message" >
+    update message
+    set from = #{from,jdbcType=BIGINT},
+      to = #{to,jdbcType=BIGINT},
+      type = #{type,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
       content = #{content,jdbcType=VARCHAR},
-      article_id = #{articleId,jdbcType=BIGINT},
-      user_id = #{userId,jdbcType=BIGINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
