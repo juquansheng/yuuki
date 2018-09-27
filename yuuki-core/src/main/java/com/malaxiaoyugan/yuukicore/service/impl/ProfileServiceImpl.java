@@ -5,7 +5,7 @@ import com.malaxiaoyugan.yuukicore.service.ProfileService;
 import org.springframework.stereotype.Service;
 
 /**
- *@describe 用户个人中心动态
+ *@describe 用户个人中心
  *@author  ttbf
  *@date  2018/9/25
  */

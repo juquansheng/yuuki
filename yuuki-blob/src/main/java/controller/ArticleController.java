@@ -94,9 +94,7 @@ public class ArticleController {
     public ResponseVO getList(@RequestBody Article article,@RequestParam("page") Integer page,
                               @RequestParam("rows") Integer rows) {
         PageBean pageBean = articleService.getList(article, page, rows);
-        if (ListUtils.isEmpty(pageBean.getPageDatas())){
-            return TTBFResultUtil.error("未获取到文章");
-        }
+
         return TTBFResultUtil.success("获取成功",pageBean);
     }
 

@@ -106,7 +106,7 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleExample.Criteria criteria = articleExample.createCriteria();
         //选择条件
         if (article.getUserId() != null){
-            //criteria.andUserIdEqualTo(article.getUserId());
+            criteria.andUserIdEqualTo(article.getUserId());
         }
         articleExample.setOrderByClause("create_time desc");
         if (page != 0 && rows != 0) {
