@@ -54,7 +54,7 @@ public class ShiroService {
         filterChainDefinitionMap.put("/plugin/**", "restFilter,anon");
         filterChainDefinitionMap.put("/vendors/**", "restFilter,anon");
         //文件上传获取
-        filterChainDefinitionMap.put("/file/**", "restFilter,anon");
+        filterChainDefinitionMap.put("/file/**", "sessionFilter,anon");
         //验证码
         filterChainDefinitionMap.put("/code/**", "restFilter,anon");
         //图片验证码
@@ -62,9 +62,9 @@ public class ShiroService {
         //首页
         filterChainDefinitionMap.put("/index/**", "restFilter,anon");
         //个人中心
-        filterChainDefinitionMap.put("/profile/**", "restFilter,token");
+        filterChainDefinitionMap.put("/profile/**", "sessionFilter,token");
         //文章修改和添加
-        filterChainDefinitionMap.put("/article/edit", "restFilter,token");
+        filterChainDefinitionMap.put("/article/edit", "sessionFilter,token");
         //文章接口
         filterChainDefinitionMap.put("/article/getdetail", "anon");
         filterChainDefinitionMap.put("/article/getlist", "anon");
@@ -72,9 +72,9 @@ public class ShiroService {
         //评论接口
         filterChainDefinitionMap.put("/comment/insert", "restFilter,token");
         filterChainDefinitionMap.put("/comment/delete", "restFilter,token");
-        filterChainDefinitionMap.put("/comment/getlist", "anon");
+        filterChainDefinitionMap.put("/comment/getlist", "restFilter,anon");
         //回复接口
-        filterChainDefinitionMap.put("/reply/**", "anon");
+        filterChainDefinitionMap.put("/reply/**", "sessionFilter,anon");
         // 加载数据库中配置的资源权限列表
        /* List<Resources> resourcesList = resourcesService.listUrlAndPermission();
         for (Resources resources : resourcesList) {

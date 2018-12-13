@@ -8,8 +8,6 @@ import com.malaxiaoyugan.yuukicore.service.RedisService;
 import com.malaxiaoyugan.yuukicore.service.UserService;
 import com.malaxiaoyugan.yuukicore.service.VerificationCodeService;
 import com.malaxiaoyugan.yuukicore.utils.PasswordUtil;
-import com.malaxiaoyugan.yuukicore.utils.SessionUtil;
-import com.malaxiaoyugan.yuukicore.utils.TTBFResult;
 import com.malaxiaoyugan.yuukicore.utils.TTBFResultUtil;
 import com.malaxiaoyugan.yuukicore.vo.LoginVo;
 import com.malaxiaoyugan.yuukicore.vo.RegisterVo;
