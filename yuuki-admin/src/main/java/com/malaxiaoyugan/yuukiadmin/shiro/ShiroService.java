@@ -75,6 +75,8 @@ public class ShiroService {
         filterChainDefinitionMap.put("/comment/getlist", "restFilter,anon");
         //回复接口
         filterChainDefinitionMap.put("/reply/**", "sessionFilter,anon");
+
+        filterChainDefinitionMap.put("/demo/**", "restFilter,anon");
         // 加载数据库中配置的资源权限列表
        /* List<Resources> resourcesList = resourcesService.listUrlAndPermission();
         for (Resources resources : resourcesList) {
