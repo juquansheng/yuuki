@@ -7,9 +7,11 @@ public class Demo {
 
     private String url;
 
+    private String imageUrl;
+
     private String name;
 
-    private String describe;
+    private String demoDescribe;
 
     private Integer status;
 
@@ -33,6 +35,14 @@ public class Demo {
         this.url = url == null ? null : url.trim();
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl == null ? null : imageUrl.trim();
+    }
+
     public String getName() {
         return name;
     }
@@ -41,12 +51,12 @@ public class Demo {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getDescribe() {
-        return describe;
+    public String getDemoDescribe() {
+        return demoDescribe;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe == null ? null : describe.trim();
+    public void setDemoDescribe(String demoDescribe) {
+        this.demoDescribe = demoDescribe == null ? null : demoDescribe.trim();
     }
 
     public Integer getStatus() {

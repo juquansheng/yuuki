@@ -5,9 +5,11 @@ import com.malaxiaoyugan.yuukicore.entity.User;
 import com.malaxiaoyugan.yuukicore.entity.UserExample;
 import com.malaxiaoyugan.yuukicore.entity.UserRole;
 import com.malaxiaoyugan.yuukicore.entity.UserRoleExample;
+import com.malaxiaoyugan.yuukicore.framework.holder.RequestHolder;
 import com.malaxiaoyugan.yuukicore.mapper.UserMapper;
 import com.malaxiaoyugan.yuukicore.mapper.UserRoleMapper;
 import com.malaxiaoyugan.yuukicore.service.UserService;
+import com.malaxiaoyugan.yuukicore.utils.IpUtil;
 import com.malaxiaoyugan.yuukicore.utils.ListUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +84,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User insertUser(User user) {
+        //获取用户ip
+        String ip = IpUtil.getRealIp(RequestHolder.getRequest());
         boolean insert = userMapper.insertSelective(user) > 0;
         if (insert){
             return user;

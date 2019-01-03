@@ -32,13 +32,13 @@ public class DemoController {
         return TTBFResultUtil.success("成功");
     }
 
-    @RequestMapping(value = "/delete",method = RequestMethod.POST)
+    @RequestMapping(value = "/delete",method = RequestMethod.GET)
     public ResponseVO delete(@RequestParam("id") Long id) {
         demoService.delete(id);
         return TTBFResultUtil.success("成功");
     }
 
-    @RequestMapping(value = "/get",method = RequestMethod.POST)
+    @RequestMapping(value = "/get",method = RequestMethod.GET)
     public ResponseVO get(@RequestParam("page") Integer page,
                           @RequestParam("rows") Integer rows) {
         PageBean list = demoService.getList(page, rows);
