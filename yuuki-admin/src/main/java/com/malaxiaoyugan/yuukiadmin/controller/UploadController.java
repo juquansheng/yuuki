@@ -7,13 +7,16 @@ import com.luhuiguo.fastdfs.service.FastFileStorageClient;
 import com.malaxiaoyugan.yuukiadmin.utils.Result;
 import com.malaxiaoyugan.yuukiadmin.utils.TTBFHttpUtils;
 import com.malaxiaoyugan.yuukicore.framework.object.ResponseVO;
+import com.malaxiaoyugan.yuukicore.utils.QiniuUtils;
 import com.malaxiaoyugan.yuukicore.utils.TTBFResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +36,22 @@ public class UploadController {
     }
 
 
+
+    /**
+     * 单个文件上传七牛云
+     * @param file
+     * @return
+     */
+    @RequestMapping(value = "/upload",method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseVO uploadQiNiu(MultipartFile file) {
+        try {
+            String s = QiniuUtils.putInputStrem(file);
+            return TTBFResultUtil.success( "图片上传成功", s);
+        } catch (Exception e) {
+            return TTBFResultUtil.error("服务器异常");
+        }
+    }
 
     /**
      * 单个文件上传

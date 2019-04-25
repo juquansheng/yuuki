@@ -77,6 +77,7 @@ public class ShiroService {
         filterChainDefinitionMap.put("/reply/**", "sessionFilter,anon");
 
         filterChainDefinitionMap.put("/demo/**", "restFilter,anon");
+        filterChainDefinitionMap.put("/file/**", "restFilter,anon");
         // 加载数据库中配置的资源权限列表
        /* List<Resources> resourcesList = resourcesService.listUrlAndPermission();
         for (Resources resources : resourcesList) {

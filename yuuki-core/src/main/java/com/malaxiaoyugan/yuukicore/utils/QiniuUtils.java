@@ -1,11 +1,14 @@
 package com.malaxiaoyugan.yuukicore.utils;
 
 
+import com.google.gson.Gson;
 import com.malaxiaoyugan.yuukicore.aop.TTBFException;
 import com.malaxiaoyugan.yuukicore.vo.QiniuVo;
 import com.qiniu.common.QiniuException;
+import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
 import com.qiniu.storage.UploadManager;
+import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 import com.qiniu.util.Base64;
 import com.qiniu.util.StringMap;
@@ -14,8 +17,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.Date;
 
 public class QiniuUtils {
@@ -37,11 +41,10 @@ public class QiniuUtils {
     /**
      *
      * @param suffix 文件名称
-     * @param name 企业名称
      * @return
      * @throws Exception
      */
-    public static QiniuVo QiniuUpToken(String suffix, String name){
+    public static QiniuVo QiniuUpToken(String suffix){
         QiniuVo qiniuVo = new QiniuVo();
         try {
             //验证七牛云身份是否通过
@@ -68,7 +71,7 @@ public class QiniuUtils {
             }
             Date date = new Date();
             //生成实际路径名
-            String randomFileName = name+date.getTime() + suffix;
+            String randomFileName = date.getTime() + suffix;
             qiniuVo.setImgUrl(randomFileName);
             System.out.println(qiniuVo.toString());
             return qiniuVo;
@@ -139,6 +142,34 @@ public class QiniuUtils {
         //如果不需要添加图片样式，使用以下方式
         return DOMAIN + key;
         //return DOMAIN + key + "?" + style;
+    }
+
+    public static String putInputStrem(MultipartFile file){
+        String key = null;
+        try {
+            //...其他参数参考类注释
+            UploadManager uploadManager = new UploadManager();
+            String upToken = auth.uploadToken(BUCKET);
+            byte[] bytes = file.getBytes();
+            try {
+                Response response = uploadManager.put(bytes,key,upToken);
+                //解析上传成功的结果
+                DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
+                return DOMAIN+putRet.hash;
+            } catch (QiniuException ex) {
+                Response r = ex.response;
+                System.err.println(r.toString());
+                try {
+                    throw new TTBFException(901,r.bodyString());
+                } catch (QiniuException ex2) {
+                    //ignore
+                    throw new TTBFException(901,ex2.getMessage());
+                }
+            }
+        } catch (Exception e) {
+            //ignore
+            throw new TTBFException(901,e.getMessage());
+        }
     }
 
 
