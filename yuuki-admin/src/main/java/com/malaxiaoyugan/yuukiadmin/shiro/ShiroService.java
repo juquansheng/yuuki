@@ -62,7 +62,7 @@ public class ShiroService {
         //首页
         filterChainDefinitionMap.put("/index/**", "restFilter,anon");
         //个人中心
-        filterChainDefinitionMap.put("/profile/**", "sessionFilter,token");
+        filterChainDefinitionMap.put("/profile/**", "sessionFilter,anon");
         //文章修改和添加
         filterChainDefinitionMap.put("/article/edit", "sessionFilter,token");
         //文章接口

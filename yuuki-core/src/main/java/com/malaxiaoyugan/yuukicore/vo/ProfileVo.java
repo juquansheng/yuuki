@@ -1,12 +1,30 @@
 package com.malaxiaoyugan.yuukicore.vo;
 
 public class ProfileVo {
+    private Long id;
     private String userName;
     private String nickName;
     private String phone;
     private String mail;
     private String createTime;
     private String lastLoginTime;
+    private PageBean pageBean;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public PageBean getPageBean() {
+        return pageBean;
+    }
+
+    public void setPageBean(PageBean pageBean) {
+        this.pageBean = pageBean;
+    }
 
     public String getUserName() {
         return userName;

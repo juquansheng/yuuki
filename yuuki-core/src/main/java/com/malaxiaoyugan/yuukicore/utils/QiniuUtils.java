@@ -27,53 +27,50 @@ public class QiniuUtils {
     // 设置需要操作的账号的AK和SK
     private static final String ACCESS_KEY = "T5opFMk3cXvOoewDTi4Ow_ZNN0euAToDJXA432EP";
     private static final String SECRET_KEY = "DVKqaB6H5Ir4fdiS9M3RPfvzBb4U1Zwof5xE6DZp";
+    // 密钥
+    private static final Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
     // 要上传的空间
     private static final String BUCKET = "blob";       //存储空间名称
     private static final String DOMAIN= "picture.malaxiaoyugan.com";       //外链域名
-    // 密钥
-    private static final Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
 
-
+    // 要上传的空间
+    private static final String VIDEO_BUCKET = "yuuki-video";       //存储空间名称
+    private static final String VIDEO_DOMAIN= "video.malaxiaoyugan.com";       //外链域名
 
     private static final String style = "自定义的图片样式";
 
-
+    public static String getUpToken() {
+        return auth.uploadToken(BUCKET, null, 3600, new StringMap().put("insertOnly", 1));
+    }
     /**
-     *
-     * @param suffix 文件名称
+     * type 1 图片 2 视频
      * @return
      * @throws Exception
      */
-    public static QiniuVo QiniuUpToken(String suffix){
+    public static QiniuVo getQiniuUpToken(Integer type){
         QiniuVo qiniuVo = new QiniuVo();
         try {
-            //验证七牛云身份是否通过
-            //Auth auth = Auth.create(accessKey, secretKey);
+            StringMap putPolicy = new StringMap();
+            putPolicy.put("returnBody", "{\"key\":\"$(key)\",\"bucket\":\"$(bucket)\",\"fsize\":$(fsize),\"user\":\"$(x:user)\",\"link\":\"$(x:url)$(hash)\"}");
+           /* putPolicy.put("callbackUrl", "http://api.example.com/qiniu/upload/callback");
+            putPolicy.put("callbackBody", "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"bucket\":\"$(bucket)\",\"fsize\":$(fsize)}");
+            putPolicy.put("callbackBodyType", "application/json");*/
+            long expireSeconds = 3600;
             //生成凭证
-
-            String upToken = auth.uploadToken(BUCKET);
-            qiniuVo.setToken(upToken);
-            //存入外链默认域名，用于拼接完整的资源外链路径
-            qiniuVo.setDomain(DOMAIN);
-
-
-            // 是否可以上传的图片格式
-            boolean flag = false;
-            String[] imgTypes = new String[]{"jpg","jpeg","bmp","gif","png","pdf"};
-            for(String fileSuffix : imgTypes) {
-                if(suffix.substring(suffix.lastIndexOf(".") + 1).equalsIgnoreCase(fileSuffix)) {
-                    flag = true;
-                    break;
-                }
+            if (type == 1){
+                String upToken = auth.uploadToken(BUCKET,null,expireSeconds,putPolicy);
+                qiniuVo.setToken(upToken);
+                //存入外链默认域名，用于拼接完整的资源外链路径
+                qiniuVo.setDomain(DOMAIN);
+                qiniuVo.setImgUrl("http://"+DOMAIN+"/");
+            }else {
+                String upToken = auth.uploadToken(VIDEO_BUCKET,null,expireSeconds,putPolicy);
+                qiniuVo.setToken(upToken);
+                //存入外链默认域名，用于拼接完整的资源外链路径
+                qiniuVo.setDomain(VIDEO_DOMAIN);
+                qiniuVo.setImgUrl("http://"+VIDEO_DOMAIN+"/");
             }
-            if(!flag) {
-                throw new TTBFException(501,"图片：" + suffix + " 上传格式不对！");
-            }
-            Date date = new Date();
-            //生成实际路径名
-            String randomFileName = date.getTime() + suffix;
-            qiniuVo.setImgUrl(randomFileName);
-            System.out.println(qiniuVo.toString());
+            System.out.println("生成七牛云凭证"+qiniuVo.toString());
             return qiniuVo;
 
         } catch (Exception e) {
@@ -84,9 +81,6 @@ public class QiniuUtils {
 
 
 
-    public static String getUpToken() {
-        return auth.uploadToken(BUCKET, null, 3600, new StringMap().put("insertOnly", 1));
-    }
 
     // 普通上传
     public static String upload(String filePath, String fileName) throws IOException {
@@ -149,13 +143,20 @@ public class QiniuUtils {
         try {
             //...其他参数参考类注释
             UploadManager uploadManager = new UploadManager();
+            StringMap putPolicy = new StringMap();
+            putPolicy.put("returnBody", "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"bucket\":\"$(bucket)\",\"fsize\":$(fsize),\"user\":\"$(x:user)\",\"age\",$(x:age)}");
+           /* putPolicy.put("callbackUrl", "http://api.example.com/qiniu/upload/callback");
+            putPolicy.put("callbackBody", "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"bucket\":\"$(bucket)\",\"fsize\":$(fsize)}");
+            putPolicy.put("callbackBodyType", "application/json");*/
+            long expireSeconds = 3600;
             String upToken = auth.uploadToken(BUCKET);
             byte[] bytes = file.getBytes();
             try {
                 Response response = uploadManager.put(bytes,key,upToken);
+                System.out.println("骑牛上传相应"+response);
                 //解析上传成功的结果
                 DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
-                return DOMAIN+putRet.hash;
+                return "http://"+DOMAIN+"/"+putRet.hash;
             } catch (QiniuException ex) {
                 Response r = ex.response;
                 System.err.println(r.toString());

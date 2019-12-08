@@ -9,11 +9,10 @@ import com.malaxiaoyugan.yuukiadmin.utils.TTBFHttpUtils;
 import com.malaxiaoyugan.yuukicore.framework.object.ResponseVO;
 import com.malaxiaoyugan.yuukicore.utils.QiniuUtils;
 import com.malaxiaoyugan.yuukicore.utils.TTBFResultUtil;
+import com.malaxiaoyugan.yuukicore.vo.FroalaResponse;
+import com.malaxiaoyugan.yuukicore.vo.QiniuVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -34,31 +33,48 @@ public class UploadController {
     public UploadController(FastFileStorageClient fastFileStorageClient) {
         this.fastFileStorageClient = fastFileStorageClient;
     }
-
-
-
     /**
-     * 单个文件上传七牛云
-     * @param file
+     * 获取上传凭证
+     * @param type 凭证类型
      * @return
      */
-    @RequestMapping(value = "/upload",method = RequestMethod.POST)
+    @RequestMapping(value = "/gettoken",method = RequestMethod.GET)
     @ResponseBody
-    public ResponseVO uploadQiNiu(MultipartFile file) {
+    public ResponseVO getToken(@RequestParam int type) {
         try {
-            String s = QiniuUtils.putInputStrem(file);
-            return TTBFResultUtil.success( "图片上传成功", s);
+            QiniuVo qiniuUpToken = QiniuUtils.getQiniuUpToken(type);
+            return TTBFResultUtil.success( "七牛凭证成功", qiniuUpToken);
         } catch (Exception e) {
             return TTBFResultUtil.error("服务器异常");
         }
     }
 
     /**
-     * 单个文件上传
+     * 单个文件上传七牛云
      * @param file
      * @return
      */
-    @RequestMapping(value = "/fileupload")
+    @RequestMapping(value = "/fileupload",method = RequestMethod.POST)
+    @ResponseBody
+    public FroalaResponse uploadQiNiu(MultipartFile file) {
+        FroalaResponse froalaResponse = new FroalaResponse();
+        try {
+            String s = QiniuUtils.putInputStrem(file);
+
+            froalaResponse.setLink(s);
+            return froalaResponse;
+        } catch (Exception e) {
+            //return TTBFResultUtil.error("服务器异常");
+            return froalaResponse;
+        }
+    }
+
+    /**
+     * 单个文件上传(上传服务器文件 弃用)
+     * @param file
+     * @return
+     */
+    @RequestMapping(value = "/fileupload.bak")
     @ResponseBody
     public ResponseVO upload(MultipartFile file) {
         try {
@@ -75,7 +91,7 @@ public class UploadController {
     }
 
     /**
-     * 多文件上传
+     * 多文件上传(上传服务器文件 弃用)
      * @param files
      * @return
      */

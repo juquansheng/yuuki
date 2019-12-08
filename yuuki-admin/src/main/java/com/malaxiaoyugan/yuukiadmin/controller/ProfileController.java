@@ -1,7 +1,9 @@
 package com.malaxiaoyugan.yuukiadmin.controller;
 
+import com.malaxiaoyugan.yuukicore.entity.Article;
 import com.malaxiaoyugan.yuukicore.entity.User;
 import com.malaxiaoyugan.yuukicore.framework.object.ResponseVO;
+import com.malaxiaoyugan.yuukicore.service.ArticleService;
 import com.malaxiaoyugan.yuukicore.service.UserLogService;
 import com.malaxiaoyugan.yuukicore.service.UserService;
 import com.malaxiaoyugan.yuukicore.utils.TTBFResultUtil;
@@ -10,14 +12,13 @@ import com.malaxiaoyugan.yuukicore.vo.ProfileVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  * 个人中心相关接口
@@ -31,18 +32,38 @@ public class ProfileController {
     private UserService userService;
     @Autowired
     private UserLogService userLogService;
+    @Autowired
+    private ArticleService articleService;
 
 
 
-    @RequestMapping(value = "/user",method = RequestMethod.GET)
-    public ResponseVO user(HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/user",method = RequestMethod.POST)
+    public ResponseVO user(@RequestBody User user, @RequestParam("page") Integer page,
+                           @RequestParam("rows") Integer rows) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         //获取用户id
         Object principals = SecurityUtils.getSubject().getPrincipals();
-        long id = Long.parseLong(principals.toString());
+        //参数不带用户id且未登录则返回401未登录
+        if (principals == null && StringUtils.isEmpty(user.getId())){
+            return TTBFResultUtil.vo(401,"用户未登录",null);
+        }
+        long id;
+        if (StringUtils.isEmpty(user.getId())){
+            id = Long.parseLong(principals.toString());
+        }else {
+            id = user.getId();
+        }
         User userById = userService.getUserById(id);
 
+
+        Article article = new Article();
+        article.setUserId(id);
+        PageBean pageBean = articleService.getList(article, page, rows);
+
+
         ProfileVo profileVo = new ProfileVo();
+        profileVo.setPageBean(pageBean);
+        profileVo.setId(userById.getId());
         profileVo.setUserName(userById.getUserName());
         profileVo.setNickName(userById.getNickName());
         profileVo.setCreateTime(simpleDateFormat.format(userById.getCreateTime()));

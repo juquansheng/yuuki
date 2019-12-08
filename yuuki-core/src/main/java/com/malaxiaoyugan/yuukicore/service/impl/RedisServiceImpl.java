@@ -38,7 +38,7 @@ public class RedisServiceImpl implements RedisService {
         try {
             redisTemplate.opsForValue().set(key, value, time, timeUnit);
         } catch (Exception e) {
-            logger.error("redis写入 " + desc + " 信息失败!");
+            logger.error("redis写入 " + desc + " 信息失败!"+e);
         }
     }
 

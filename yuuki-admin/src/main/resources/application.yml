@@ -41,13 +41,17 @@ spring:
     # HTTP ENCODING
     servlet:
         multipart:
-            max-file-size: 2MB
-            max-request-size: 10MB
+            max-file-size: 300MB
+            max-request-size: 300MB
     http:
         encoding:
             enabled: true
             charset: UTF-8
             force: true
+        multipart:
+            enabled: true
+            max-file-size: 300MB
+            max-request-size: 300MB
     messages:
         encoding: UTF-8
     jmx:
@@ -110,3 +114,14 @@ fdfs:
 
 
 
+#配置日志
+logging:
+    #配置日志文件路径
+    pattern:
+        file: "my.log.%d{yyyy-MM-dd}.log"
+        console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"
+    path: /usr/local/logs/yuuki_log
+    level:
+        root: info #不同目录下的日志可配置不同级别
+        org.springfromework.web: info
+        org.hibernate: error
